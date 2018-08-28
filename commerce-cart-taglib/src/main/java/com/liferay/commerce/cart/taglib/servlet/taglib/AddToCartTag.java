@@ -14,19 +14,30 @@
 
 package com.liferay.commerce.cart.taglib.servlet.taglib;
 
+import com.liferay.commerce.cart.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
@@ -35,19 +46,56 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.jsp.PageContext;
+
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class AddToCartTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {
-		String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
-
-		int minOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
-
 		try {
+			CommerceContext commerceContext =
+				(CommerceContext)request.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+			if (commerceOrder == null) {
+				long groupId = themeDisplay.getScopeGroupId();
+
+				Organization organization = commerceContext.getOrganization();
+
+				if (organization != null) {
+					groupId = organization.getGroupId();
+				}
+
+				if (!portletResourcePermission.contains(
+						themeDisplay.getPermissionChecker(), groupId,
+						CommerceOrderActionKeys.ADD_COMMERCE_ORDER)) {
+
+					return SKIP_BODY;
+				}
+			}
+			else {
+				if (!commerceOrderModelResourcePermission.contains(
+						themeDisplay.getPermissionChecker(), commerceOrder,
+						ActionKeys.UPDATE)) {
+
+					return SKIP_BODY;
+				}
+			}
+
+			String randomNamespace =
+				StringUtil.randomId() + StringPool.UNDERLINE;
+
+			int minOrderQuantity =
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+
 			Map<String, Object> context = getContext();
 
 			putValue("id", randomNamespace + "id");
@@ -112,6 +160,16 @@ public class AddToCartTag extends ComponentRendererTag {
 		putValue("label", LanguageUtil.get(request, label));
 	}
 
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		commerceOrderModelResourcePermission =
+			ServletContextUtil.getCommerceOrderModelResourcePermission();
+		portletResourcePermission =
+			ServletContextUtil.getPortletResourcePermission();
+	}
+
 	public void setProductContentId(String productContentId) {
 		putValue("productContentId", productContentId);
 	}
@@ -123,6 +181,10 @@ public class AddToCartTag extends ComponentRendererTag {
 	public void setTaglibQuantityInputId(String taglibQuantityInputId) {
 		putValue("taglibQuantityInputId", taglibQuantityInputId);
 	}
+
+	protected ModelResourcePermission<CommerceOrder>
+		commerceOrderModelResourcePermission;
+	protected PortletResourcePermission portletResourcePermission;
 
 	private String _getURI() throws WindowStateException {
 		PortletURL portletURL = PortletURLFactoryUtil.create(

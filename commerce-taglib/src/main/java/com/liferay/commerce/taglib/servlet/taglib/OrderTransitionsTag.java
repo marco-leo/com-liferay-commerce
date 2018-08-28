@@ -131,7 +131,11 @@ public class OrderTransitionsTag extends IncludeTag {
 			return transitionOVPs;
 		}
 
-		if (!commerceOrder.isOpen()) {
+		if (!commerceOrder.isOpen() &&
+			commerceOrderModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), commerceOrder,
+				ActionKeys.VIEW)) {
+
 			transitionOVPs.add(
 				new ObjectValuePair<Long, String>(0L, "reorder"));
 		}
