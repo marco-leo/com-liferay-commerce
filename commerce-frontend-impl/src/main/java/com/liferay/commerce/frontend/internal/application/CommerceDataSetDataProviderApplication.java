@@ -17,6 +17,8 @@ package com.liferay.commerce.frontend.internal.application;
 import com.liferay.commerce.frontend.ClayTableDataJSONBuilder;
 import com.liferay.commerce.frontend.CommerceDataProviderRegistry;
 import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
+import com.liferay.commerce.frontend.FilterFactory;
+import com.liferay.commerce.frontend.FilterFactoryRegistry;
 import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.internal.application.context.provider.PaginationContextProvider;
 import com.liferay.commerce.frontend.internal.application.context.provider.SortContextProvider;
@@ -77,6 +79,9 @@ public class CommerceDataSetDataProviderApplication extends Application {
 		CommerceDataSetDataProvider commerceDataProvider =
 			_commerceDataProviderRegistry.getCommerceDataProvider(dataProvider);
 
+		FilterFactory filterFactory = _filterFactoryRegistry.getFilterFactory(
+			dataProvider);
+
 		try {
 			EventsProcessorUtil.process(
 				PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
@@ -84,7 +89,8 @@ public class CommerceDataSetDataProviderApplication extends Application {
 				httpServletResponse);
 
 			List<Object> items = commerceDataProvider.getItems(
-				groupId, pagination, sort);
+				groupId, filterFactory.create(httpServletRequest), pagination,
+				sort);
 
 			String json = _clayTableDataJSONBuilder.build(
 				groupId, tableName, items, httpServletRequest);
@@ -120,6 +126,9 @@ public class CommerceDataSetDataProviderApplication extends Application {
 
 	@Reference
 	private CommerceDataProviderRegistry _commerceDataProviderRegistry;
+
+	@Reference
+	private FilterFactoryRegistry _filterFactoryRegistry;
 
 	@Reference
 	private PaginationContextProvider _paginationContextProvider;
