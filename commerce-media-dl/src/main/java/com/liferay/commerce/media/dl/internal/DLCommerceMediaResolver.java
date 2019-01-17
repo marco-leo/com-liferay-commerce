@@ -14,24 +14,32 @@
 
 package com.liferay.commerce.media.dl.internal;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceMediaConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPRuleLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.product.util.CPRulesThreadLocal;
+import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,8 +52,8 @@ import com.liferay.portal.kernel.util.URLCodec;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,11 +68,10 @@ import org.osgi.service.component.annotations.Reference;
 public class DLCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Override
-	public String getDownloadUrl(
-			long cpAttachmentFileEntryId, long cpDefinitionId)
+	public String getDownloadUrl(long cpAttachmentFileEntryId)
 		throws PortalException {
 
-		return getUrl(cpAttachmentFileEntryId, cpDefinitionId, true, false);
+		return getUrl(cpAttachmentFileEntryId, true, false);
 	}
 
 	@Override
@@ -77,28 +84,24 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 	}
 
 	@Override
-	public String getThumbnailUrl(
-			long cpAttachmentFileEntryId, long cpDefinitionId)
+	public String getThumbnailUrl(long cpAttachmentFileEntryId)
 		throws PortalException {
 
-		return getUrl(cpAttachmentFileEntryId, cpDefinitionId, false, true);
+		return getUrl(cpAttachmentFileEntryId, false, true);
 	}
 
 	@Override
-	public String getUrl(long cpAttachmentFileEntryId, long cpDefinitionId)
-		throws PortalException {
-
-		return getUrl(cpAttachmentFileEntryId, cpDefinitionId, false, false);
+	public String getUrl(long cpAttachmentFileEntryId) throws PortalException {
+		return getUrl(cpAttachmentFileEntryId, false, false);
 	}
 
 	@Override
 	public String getUrl(
-			long cpAttachmentFileEntryId, long cpDefinitionId, boolean download,
-			boolean thumbnail)
+			long cpAttachmentFileEntryId, boolean download, boolean thumbnail)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
+			_cpAttachmentFileEntryService.fetchCPAttachmentFileEntry(
 				cpAttachmentFileEntryId);
 
 		if (cpAttachmentFileEntry == null) {
@@ -110,22 +113,25 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 		sb.append(_portal.getPathModule());
 		sb.append(StringPool.SLASH);
 		sb.append(CommerceMediaConstants.SERVLET_PATH);
-		sb.append("/products/");
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
+		String className = cpAttachmentFileEntry.getClassName();
 
-		sb.append(cpDefinition.getCProductId());
+		if (className.equals(CPDefinition.class.getName())) {
+			sb.append("/products/");
+
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(
+					cpAttachmentFileEntry.getClassPK());
+
+			sb.append(cpDefinition.getCProductId());
+		}
 
 		sb.append(StringPool.SLASH);
-
-		Map<Locale, String> productFriendlyURLMap =
-			_cpDefinitionLocalService.getUrlTitleMap(cpDefinitionId);
 
 		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
 			cpAttachmentFileEntry.getGroupId());
 
-		sb.append(productFriendlyURLMap.get(siteDefaultLocale));
+		sb.append(cpAttachmentFileEntry.getTitle(siteDefaultLocale));
 
 		sb.append(StringPool.SLASH);
 		sb.append(cpAttachmentFileEntry.getFileEntryId());
@@ -171,9 +177,16 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 
 		CProduct cProduct = _cProductLocalService.fetchCProduct(cProductId);
 
+		if (cProduct == null) {
+			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
 		try {
-			if ((cProduct == null) ||
-				!_cpDefinitionModelResourcePermission.contains(
+			setCPRules(httpServletRequest, cProduct.getGroupId());
+
+			if (!_cpDefinitionModelResourcePermission.contains(
 					PermissionThreadLocal.getPermissionChecker(),
 					cProduct.getPublishedCPDefinitionId(), ActionKeys.VIEW)) {
 
@@ -193,7 +206,7 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 			ServletResponseUtil.sendFile(
 				httpServletRequest, httpServletResponse,
 				fileEntry.getFileName(), getMediaBytes(httpServletRequest),
-				null, contentDisposition);
+				fileEntry.getMimeType(), contentDisposition);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -209,8 +222,9 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 
 		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
-		if (pathArray.length >= 4) {
-			long fileEntryId = GetterUtil.getLong(pathArray[3]);
+		if (pathArray.length >= 3) {
+			long fileEntryId = GetterUtil.getLong(
+				pathArray[pathArray.length - 2]);
 
 			return _dlAppLocalService.getFileEntry(fileEntryId);
 		}
@@ -218,12 +232,51 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 		return null;
 	}
 
+	protected void setCPRules(
+			HttpServletRequest httpServletRequest, long groupId)
+		throws PortalException {
+
+		CommerceAccount commerceAccount =
+			_commerceAccountHelper.getCurrentCommerceAccount(
+				groupId, httpServletRequest);
+
+		long commerceAccountId = 0;
+		long commerceAccountUserId = 0;
+
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
+			commerceAccountUserId = commerceAccount.getUserId();
+		}
+		else {
+			User user = _userLocalService.getDefaultUser(
+				_portal.getCompanyId(httpServletRequest));
+
+			commerceAccountUserId = user.getUserId();
+		}
+
+		System.out.println(commerceAccountUserId);
+
+		long[] commerceUserSegmentEntryIds =
+			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
+				groupId, commerceAccountId, commerceAccountUserId);
+
+		List<CPRule> cpRules = _cpRuleLocalService.getCPRules(
+			groupId, commerceUserSegmentEntryIds);
+
+		CPRulesThreadLocal.setCPRules(cpRules);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLCommerceMediaResolver.class);
 
 	@Reference
-	private CPAttachmentFileEntryLocalService
-		_cpAttachmentFileEntryLocalService;
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceUserSegmentHelper _commerceUserSegmentHelper;
+
+	@Reference
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
@@ -236,6 +289,9 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Reference
 	private CProductLocalService _cProductLocalService;
+
+	@Reference
+	private CPRuleLocalService _cpRuleLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -251,5 +307,8 @@ public class DLCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

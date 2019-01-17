@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.media.web;
+package com.liferay.commerce.media.web.internal.servlet;
 
 import com.liferay.commerce.constants.CommerceMediaConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -88,10 +87,9 @@ public class CommerceMediaServlet extends HttpServlet {
 			return;
 		}
 
-		String contentDisposition = null;
+		String contentDisposition = HttpHeaders.CONTENT_DISPOSITION_INLINE;
 
-		boolean download = ParamUtil.getBoolean(
-			httpServletRequest, "download");
+		boolean download = ParamUtil.getBoolean(httpServletRequest, "download");
 
 		if (download) {
 			contentDisposition = HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
