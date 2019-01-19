@@ -12,23 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.catalog;
+package com.liferay.commerce.constants;
 
 /**
- * @author Marco Leo
+ * @author Alec Sloan
  */
-public interface CPMedia {
+public class CommerceMediaConstants {
 
-	public String getDownloadUrl();
-
-	public long getId();
-
-	public String getThumbnailUrl();
-
-	public String getTitle();
-
-	public String getUrl();
-
-	public String mimeType();
+	public static final String SERVLET_PATH = "commerce-media";
 
 }

@@ -118,17 +118,28 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long cpDefinitionId)
+	public List<CPMedia> getCPAttachmentFileEntries(
+			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		List<CPMedia> cpMedias = new ArrayList<>();
 
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
-		return _cpAttachmentFileEntryService.getCPAttachmentFileEntries(
-			classNameId, cpDefinitionId,
-			CPAttachmentFileEntryConstants.TYPE_OTHER,
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
+				classNameId, cpDefinitionId,
+				CPAttachmentFileEntryConstants.TYPE_OTHER,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			cpMedias.add(new CPMediaImpl(cpAttachmentFileEntry, themeDisplay));
+		}
+
+		return cpMedias;
 	}
 
 	@Override
