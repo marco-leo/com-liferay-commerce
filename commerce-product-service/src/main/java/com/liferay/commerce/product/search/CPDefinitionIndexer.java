@@ -35,8 +35,10 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPRulesThreadLocal;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -71,6 +73,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -478,10 +481,34 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			specificationOptionIds.add(
 				cpSpecificationOption.getCPSpecificationOptionId());
 
+			Set<Locale> specificationLanguageIds =
+				LanguageUtil.getAvailableLocales(
+					cpDefinitionSpecificationOptionValue.getGroupId());
+
+			for (Locale locale : specificationLanguageIds) {
+
+				String languageId = LanguageUtil.getLanguageId(locale);
+
+				String localizedSpecificationOptionValue =
+					cpDefinitionSpecificationOptionValue.getValue(languageId);
+
+				if (localizedSpecificationOptionValue.isEmpty()) {
+					localizedSpecificationOptionValue =
+						cpDefinitionSpecificationOptionValue.getValue(
+							cpDefinitionDefaultLanguageId);
+				}
+
+				document.addText(
+					languageId + "_SPECIFICATION_" +
+						cpSpecificationOption.getKey() + "_VALUE_NAME",
+					localizedSpecificationOptionValue);
+			}
+
 			document.addText(
 				"SPECIFICATION_" + cpSpecificationOption.getKey() +
 					"_VALUE_NAME",
-				cpDefinitionSpecificationOptionValue.getValue());
+				cpDefinitionSpecificationOptionValue.getValue(
+					cpDefinitionDefaultLanguageId));
 
 			document.addText(
 				"SPECIFICATION_" +
