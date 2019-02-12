@@ -16,13 +16,18 @@ package com.liferay.commerce.product.content.search.web.internal.display.context
 
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.util.List;
@@ -56,21 +61,20 @@ public class CPSpecificationOptionFacetsDisplayContext {
 	public CPSpecificationOption getCPSpecificationOption(String fieldName)
 		throws PortalException {
 
-		String cpSpecificationOptionId =
-			CPSpecificationOptionFacetsUtil.
-				getCPSpecificationOptionIdFromIndexFieldName(fieldName);
+		String key = CPSpecificationOptionFacetsUtil.
+			getCPSpecificationOptionKeyFromIndexFieldName(fieldName);
 
 		return _cpSpecificationOptionLocalService.fetchCPSpecificationOption(
-			GetterUtil.getLong(cpSpecificationOptionId));
+			PortalUtil.getScopeGroupId(_renderRequest), key);
 	}
 
-	public long getCPSpecificationOptionKey(String fieldName)
+	public String getCPSpecificationOptionKey(String fieldName)
 		throws PortalException {
 
 		CPSpecificationOption cpSpecificationOption = getCPSpecificationOption(
 			fieldName);
 
-		return cpSpecificationOption.getCPSpecificationOptionId();
+		return cpSpecificationOption.getKey();
 	}
 
 	public String getCPSpecificationOptionTitle(String fieldName)
@@ -85,13 +89,8 @@ public class CPSpecificationOptionFacetsDisplayContext {
 	public String getDisplayName(Locale locale, String key)
 		throws PortalException {
 
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue =
-				_cpDefinitionSpecificationOptionValueService.
-					fetchCPDefinitionSpecificationOptionValue(
-						GetterUtil.getLong(key));
-
-		return cpDefinitionSpecificationOptionValue.getValue(locale);
+		return LocalizationUtil.getLocalization(
+			key, LocaleUtil.toLanguageId(locale));
 	}
 
 	public List<Facet> getFacets() {
@@ -102,19 +101,18 @@ public class CPSpecificationOptionFacetsDisplayContext {
 			String fieldName, String fieldValue)
 		throws PortalException {
 
-		CPSpecificationOption cpSpecificationOption = getCPSpecificationOption(
-			fieldName);
+		CPSpecificationOption cpSpecificationOption =
+			getCPSpecificationOption(fieldName);
 
 		Optional<String[]> parameterValuesOptional =
 			_portletSharedSearchResponse.getParameterValues(
-				String.valueOf(
-					cpSpecificationOption.getCPSpecificationOptionId()),
-				_renderRequest);
+				cpSpecificationOption.getKey(), _renderRequest);
 
 		if (parameterValuesOptional.isPresent()) {
 			String[] parameterValues = parameterValuesOptional.get();
 
-			return ArrayUtil.contains(parameterValues, fieldValue);
+			return ArrayUtil.contains(
+				parameterValues, getDisplayName(_locale, fieldValue));
 		}
 
 		return false;
