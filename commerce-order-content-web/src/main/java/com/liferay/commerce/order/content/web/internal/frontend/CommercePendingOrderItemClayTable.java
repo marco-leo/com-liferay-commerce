@@ -32,13 +32,21 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
+import com.liferay.commerce.order.content.web.internal.model.OrderItemOption;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,10 +57,14 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -135,6 +147,8 @@ public class CommercePendingOrderItemClayTable
 			"sku", "sku");
 
 		skuField.setContentRenderer("imageName");
+		ClayTableSchemaField optionField = clayTableSchemaBuilder.addField("options", "options");
+		optionField.setContentRenderer("options");
 
 		clayTableSchemaBuilder.addField("name", "name");
 
@@ -214,18 +228,25 @@ public class CommercePendingOrderItemClayTable
 					}
 				}
 
-				orderItems.add(
-					new OrderItem(
-						commerceOrderItem.getCommerceOrderItemId(),
+				OrderItem orderItem = new OrderItem(
+					commerceOrderItem.getCommerceOrderItemId(),
+					commerceOrderItem.getCommerceOrderId(),
+					commerceOrderItem.getSku(),
+					commerceOrderItem.getName(themeDisplay.getLocale()),
+					price, discount, commerceOrderItem.getQuantity(), total,
+					_cpInstanceHelper.getCPInstanceThumbnailSrc(
+						commerceOrderItem.getCPInstanceId()),
+					CommerceOrderClayTableUtil.getViewShipmentURL(
 						commerceOrderItem.getCommerceOrderId(),
-						commerceOrderItem.getSku(),
-						commerceOrderItem.getName(themeDisplay.getLocale()),
-						price, discount, commerceOrderItem.getQuantity(), total,
-						_cpInstanceHelper.getCPInstanceThumbnailSrc(
-							commerceOrderItem.getCPInstanceId()),
-						CommerceOrderClayTableUtil.getViewShipmentURL(
-							commerceOrderItem.getCommerceOrderId(),
-							themeDisplay)));
+						themeDisplay));
+
+				List<OrderItemOption> keyValuePairs =
+					getKeyValuePairs(
+						commerceOrderItem.getJson(), themeDisplay.getLocale());
+
+				orderItem.setOptions(keyValuePairs);
+
+				orderItems.add(orderItem);
 			}
 		}
 		catch (Exception e) {
@@ -234,6 +255,78 @@ public class CommercePendingOrderItemClayTable
 
 		return orderItems;
 	}
+
+
+	public List<OrderItemOption> getKeyValuePairs(String json, Locale locale)
+		throws PortalException {
+
+		List<OrderItemOption> values = new ArrayList<>();
+
+		if (Validator.isNull(json)) {
+			return values;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			long cpDefinitionOptionRelId = jsonObject.getLong("key");
+			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+					cpDefinitionOptionRelId);
+
+			if (cpDefinitionOptionRel == null) {
+				continue;
+			}
+
+			for (int j = 0; j < valueJSONArray.length(); j++) {
+				String value = StringPool.BLANK;
+
+				long cpDefinitionOptionValueRelId = GetterUtil.getLong(
+					valueJSONArray.getString(j));
+
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					_cpDefinitionOptionValueRelLocalService.
+															   fetchCPDefinitionOptionValueRel(
+																   cpDefinitionOptionValueRelId);
+
+				if (cpDefinitionOptionValueRel != null) {
+					value = cpDefinitionOptionValueRel.getName(locale);
+				}
+				else {
+					value = valueJSONArray.getString(j);
+				}
+
+				String ddmFormFieldTypeName =
+					cpDefinitionOptionRel.getDDMFormFieldTypeName();
+
+				if(ddmFormFieldTypeName.equals("document_library")){
+					JSONObject document =
+						JSONFactoryUtil.createJSONObject(value);
+
+					value= document.getString("url");
+				}
+
+				OrderItemOption keyValuePair = new OrderItemOption(
+					cpDefinitionOptionRel.getName(locale), value,
+					ddmFormFieldTypeName);
+
+				values.add(keyValuePair);
+			}
+		}
+
+		return values;
+	}
+
+	@Reference
+	private CPDefinitionOptionRelLocalService _cpDefinitionOptionRelLocalService;
+
+	@Reference
+	private CPDefinitionOptionValueRelLocalService _cpDefinitionOptionValueRelLocalService;
+
 
 	@Override
 	public boolean isShowActionsMenu() {

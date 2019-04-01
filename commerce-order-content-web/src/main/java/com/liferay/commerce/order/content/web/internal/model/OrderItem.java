@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.order.content.web.internal.model;
 
+import java.util.List;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -76,6 +78,15 @@ public class OrderItem {
 		return _viewShipmentsURL;
 	}
 
+
+	public List<OrderItemOption> getOptions() {
+		return _options;
+	}
+
+	public void setOptions(List<OrderItemOption> options) {
+		_options = options;
+	}
+
 	private final String _discount;
 	private final String _name;
 	private final long _orderId;
@@ -85,6 +96,7 @@ public class OrderItem {
 	private final String _sku;
 	private final String _thumbnail;
 	private final String _total;
+	private List<OrderItemOption> _options;
 	private final String _viewShipmentsURL;
 
 }

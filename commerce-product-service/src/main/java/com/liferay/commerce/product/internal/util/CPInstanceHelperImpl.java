@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -513,6 +514,14 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				}
 				else {
 					value = valueJSONArray.getString(j);
+				}
+
+				String ddmFormFieldTypeName =
+					cpDefinitionOptionRel.getDDMFormFieldTypeName();
+
+				if(ddmFormFieldTypeName.equals("document_library")){
+
+					value= "File";
 				}
 
 				KeyValuePair keyValuePair = new KeyValuePair();

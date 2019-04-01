@@ -103,7 +103,7 @@
 	{@param item: ?}
 	{@param value: ?}
 	{@param? _handleCellContentClick: any}
-	{@param? spritemap: string}
+    {@param? spritemap: string}
 
 	<td class="image-name-cell">
 		<h1 class="table-list-title">
@@ -124,6 +124,28 @@
 			{else}
 				{$label}
 			{/if}
+		</h1>
+	</td>
+{/deltemplate}
+
+{deltemplate ClayTable.Cell variant="'options'"}
+    {@param fieldSchema: ?}
+    {@param item: ?}
+    {@param value: ?}
+    {@param? _handleCellContentClick: any}
+    {@param? spritemap: string}
+
+	<td class="">
+		<h1 class="table-list-title">
+            {if $item.options}
+                {foreach $option in $item.options}
+                    {if $option.type == 'document_library'}
+                        <div class=""><a target="_blank" href="{$option.value}">Download</a></div>
+                    {else}
+                        <div class="">{$option.value}</div>
+                    {/if}
+                {/foreach}
+            {/if}
 		</h1>
 	</td>
 {/deltemplate}
