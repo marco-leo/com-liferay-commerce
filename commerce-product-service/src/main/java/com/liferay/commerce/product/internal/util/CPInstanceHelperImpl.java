@@ -520,8 +520,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					cpDefinitionOptionRel.getDDMFormFieldTypeName();
 
 				if(ddmFormFieldTypeName.equals("document_library")){
+					JSONObject document =
+						JSONFactoryUtil.createJSONObject(value);
 
-					value= "File";
+					value= "<a href='" + document.getString("url")+ "' target='_blank'>Download</a>";
 				}
 
 				KeyValuePair keyValuePair = new KeyValuePair();

@@ -114,7 +114,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 								}
 								%>
 
-								<div class="list-group-subtitle"><%= HtmlUtil.escape(stringJoiner.toString()) %></div>
+								<div class="list-group-subtitle"><%= stringJoiner.toString() %></div>
 
 								<c:if test="<%= !commerceOrderValidatorResultMap.isEmpty() %>">
 
