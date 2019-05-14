@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -132,13 +133,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPDefinition fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+	public CPDefinition fetchCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition =
-			cpDefinitionLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
+			cpDefinitionId);
 
 		if (cpDefinition != null) {
 			_cpDefinitionModelResourcePermission.check(
@@ -149,11 +148,29 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPDefinition fetchCPDefinition(long cpDefinitionId)
+	public CPDefinition fetchCPDefinitionByCProductExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException {
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
-			cpDefinitionId);
+		CPDefinition cpDefinition =
+			cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					companyId, externalReferenceCode);
+
+		if (cpDefinition != null) {
+			_cpDefinitionModelResourcePermission.check(
+				getPermissionChecker(), cpDefinition, ActionKeys.VIEW);
+		}
+
+		return cpDefinition;
+	}
+
+	@Override
+	public CPDefinition fetchCPDefinitionByCProductId(long cProductId)
+		throws PortalException {
+
+		CPDefinition cpDefinition =
+			cpDefinitionLocalService.fetchCPDefinitionByCProductId(cProductId);
 
 		if (cpDefinition != null) {
 			_cpDefinitionModelResourcePermission.check(
@@ -468,18 +485,17 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinition cpDefinition =
-			cpDefinitionLocalService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(), externalReferenceCode);
+		CProduct cProduct = cProductLocalService.fetchCProductByReferenceCode(
+			serviceContext.getCompanyId(), externalReferenceCode);
 
-		if (cpDefinition == null) {
+		if (cProduct == null) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 		}
 		else {
 			_cpDefinitionModelResourcePermission.check(
-				getPermissionChecker(), cpDefinition.getCPDefinitionId(),
+				getPermissionChecker(), cProduct.getPublishedCPDefinitionId(),
 				ActionKeys.UPDATE);
 		}
 

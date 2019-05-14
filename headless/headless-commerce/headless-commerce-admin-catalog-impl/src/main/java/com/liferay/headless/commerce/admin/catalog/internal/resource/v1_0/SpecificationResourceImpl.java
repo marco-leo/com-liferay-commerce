@@ -14,15 +14,25 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException;
+import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.service.CPSpecificationOptionService;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SpecificationValue;
-import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SpecificationHelper;
-import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SpecificationValueHelper;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationResource;
+import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverter;
+import com.liferay.headless.commerce.core.dto.v1_0.converter.DTOConverterRegistry;
+import com.liferay.headless.commerce.core.dto.v1_0.converter.DefaultDTOConverterContext;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -32,6 +42,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Zoltán Takács
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/specification.properties",
@@ -40,8 +51,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 
 	@Override
-	public Response deleteSpecification(@NotNull Long id) throws Exception {
-		_specificationHelper.deleteSpecification(id);
+	public Response deleteSpecification(Long id) throws Exception {
+		_cpSpecificationOptionService.deleteCPSpecificationOption(id);
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -49,33 +60,39 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 	}
 
 	@Override
-	public Specification getSpecification(@NotNull Long id) throws Exception {
-		return _specificationHelper.getSpecification(id);
+	public Page<Specification> getCatalogSiteSpecificationsPage(
+			Long siteId, Pagination pagination)
+		throws Exception {
+
+		int totalItems =
+			_cpSpecificationOptionService.getCPSpecificationOptionsCount(
+				siteId);
+
+		List<CPSpecificationOption> cpSpecificationOptions =
+			_cpSpecificationOptionService.getCPSpecificationOptions(
+				siteId, pagination.getStartPosition(),
+				pagination.getEndPosition(), null);
+
+		return Page.of(
+			_toSpecifications(cpSpecificationOptions), pagination, totalItems);
 	}
 
 	@Override
-	public Page<Specification> getSpecifications(
-			@NotNull Long groupId, Pagination pagination)
-		throws Exception {
+	public Specification getSpecification(Long id) throws Exception {
+		DTOConverter specificationDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				CPSpecificationOption.class.getName());
 
-		return _specificationHelper.getSpecifications(groupId, pagination);
+		return (Specification)specificationDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(), id));
 	}
 
 	@Override
-	public Page<SpecificationValue> getSpecificationValues(
-			@NotNull Long id, Pagination pagination)
+	public Response patchSpecification(Long id, Specification specification)
 		throws Exception {
 
-		return _specificationValueHelper.getSpecificationValues(
-			id, contextAcceptLanguage, pagination);
-	}
-
-	@Override
-	public Response updateSpecification(
-			@NotNull Long id, Specification specification)
-		throws Exception {
-
-		_specificationHelper.updateSpecification(id, specification);
+		_updateSpecification(id, specification);
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -83,26 +100,122 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 	}
 
 	@Override
-	public Specification upsertSpecification(
-			@NotNull Long groupId, Specification specification)
+	public Specification postCatalogSiteSpecification(
+			Long siteId, Specification specification)
 		throws Exception {
 
-		return _specificationHelper.upsertSpecification(groupId, specification);
+		return _upsertSpecification(siteId, specification);
 	}
 
-	@Override
-	public SpecificationValue upsertSpecificationValue(
-			@NotNull Long id, SpecificationValue specificationValue)
+	private long _getCPOptionCategoryId(Specification specification) {
+		OptionCategory optionCategory = specification.getOptionCategory();
+
+		if (optionCategory == null) {
+			return 0;
+		}
+
+		return optionCategory.getId();
+	}
+
+	private boolean _isFacetable(Specification specification) {
+		boolean facetable = false;
+
+		if (specification.getFacetable() != null) {
+			facetable = specification.getFacetable();
+		}
+
+		return facetable;
+	}
+
+	private List<Specification> _toSpecifications(
+			List<CPSpecificationOption> cpSpecificationOptions)
 		throws Exception {
 
-		return _specificationValueHelper.upsertSpecificationValue(
-			id, specificationValue, contextAcceptLanguage);
+		List<Specification> specifications = new ArrayList<>();
+
+		DTOConverter specificationDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				CPSpecificationOption.class.getName());
+
+		for (CPSpecificationOption cpSpecificationOption :
+				cpSpecificationOptions) {
+
+			specifications.add(
+				(Specification)specificationDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						contextAcceptLanguage.getPreferredLocale(),
+						cpSpecificationOption.getCPSpecificationOptionId())));
+		}
+
+		return specifications;
 	}
 
-	@Reference
-	private SpecificationHelper _specificationHelper;
+	private CPSpecificationOption _updateSpecification(
+			Long id, Specification specification)
+		throws PortalException {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.getCPSpecificationOption(id);
+
+		return _cpSpecificationOptionService.updateCPSpecificationOption(
+			cpSpecificationOption.getCPSpecificationOptionId(),
+			_getCPOptionCategoryId(specification),
+			LanguageUtils.getLocalizedMap(specification.getTitle()),
+			LanguageUtils.getLocalizedMap(specification.getDescription()),
+			_isFacetable(specification), specification.getKey(),
+			_serviceContextHelper.getServiceContext(
+				cpSpecificationOption.getGroupId()));
+	}
+
+	private Specification _upsertSpecification(
+			long siteId, Specification specification)
+		throws Exception {
+
+		DTOConverter specificationDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				CPSpecificationOption.class.getName());
+
+		try {
+			CPSpecificationOption cpSpecificationOption = _updateSpecification(
+				specification.getId(), specification);
+
+			return (Specification)specificationDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					contextAcceptLanguage.getPreferredLocale(),
+					cpSpecificationOption.getCPSpecificationOptionId()));
+		}
+		catch (NoSuchCPSpecificationOptionException nscpsoe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find specification with ID: " +
+						specification.getId());
+			}
+		}
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.addCPSpecificationOption(
+				_getCPOptionCategoryId(specification),
+				LanguageUtils.getLocalizedMap(specification.getTitle()),
+				LanguageUtils.getLocalizedMap(specification.getDescription()),
+				_isFacetable(specification), specification.getKey(),
+				_serviceContextHelper.getServiceContext(siteId));
+
+		return (Specification)specificationDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(),
+				cpSpecificationOption.getCPSpecificationOptionId()));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SpecificationResourceImpl.class);
 
 	@Reference
-	private SpecificationValueHelper _specificationValueHelper;
+	private CPSpecificationOptionService _cpSpecificationOptionService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

@@ -24,8 +24,12 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -41,9 +45,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("Specification")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"key", "title"})
 @XmlRootElement(name = "Specification")
 public class Specification {
 
+	@Schema
 	public Map<String, String> getDescription() {
 		return description;
 	}
@@ -60,6 +66,9 @@ public class Specification {
 		try {
 			description = descriptionUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -69,6 +78,7 @@ public class Specification {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@Schema
 	public Boolean getFacetable() {
 		return facetable;
 	}
@@ -84,6 +94,9 @@ public class Specification {
 		try {
 			facetable = facetableUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -93,6 +106,7 @@ public class Specification {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean facetable;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -106,6 +120,9 @@ public class Specification {
 		try {
 			id = idUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -115,6 +132,7 @@ public class Specification {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema
 	public String getKey() {
 		return key;
 	}
@@ -128,6 +146,9 @@ public class Specification {
 		try {
 			key = keyUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -138,6 +159,7 @@ public class Specification {
 	@NotEmpty
 	protected String key;
 
+	@Schema
 	public OptionCategory getOptionCategory() {
 		return optionCategory;
 	}
@@ -154,6 +176,9 @@ public class Specification {
 		try {
 			optionCategory = optionCategoryUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -163,6 +188,7 @@ public class Specification {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OptionCategory optionCategory;
 
+	@Schema
 	public Map<String, String> getTitle() {
 		return title;
 	}
@@ -178,6 +204,9 @@ public class Specification {
 		try {
 			title = titleUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -188,6 +217,7 @@ public class Specification {
 	@NotNull
 	protected Map<String, String> title;
 
+	@Schema
 	public SpecificationValue[] getValues() {
 		return values;
 	}
@@ -202,6 +232,9 @@ public class Specification {
 
 		try {
 			values = valuesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -239,48 +272,81 @@ public class Specification {
 
 		sb.append("{");
 
-		sb.append("\"description\": ");
+		if (description != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append(description);
-		sb.append(", ");
+			sb.append("\"description\": ");
 
-		sb.append("\"facetable\": ");
-
-		sb.append(facetable);
-		sb.append(", ");
-
-		sb.append("\"id\": ");
-
-		sb.append(id);
-		sb.append(", ");
-
-		sb.append("\"key\": ");
-
-		sb.append("\"");
-		sb.append(key);
-		sb.append("\"");
-		sb.append(", ");
-
-		sb.append("\"optionCategory\": ");
-
-		sb.append(optionCategory);
-		sb.append(", ");
-
-		sb.append("\"title\": ");
-
-		sb.append(title);
-		sb.append(", ");
-
-		sb.append("\"values\": ");
-
-		if (values == null) {
-			sb.append("null");
+			sb.append(_toJSON(description));
 		}
-		else {
+
+		if (facetable != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"facetable\": ");
+
+			sb.append(facetable);
+		}
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
+		}
+
+		if (key != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
+		}
+
+		if (optionCategory != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"optionCategory\": ");
+
+			sb.append(String.valueOf(optionCategory));
+		}
+
+		if (title != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append(_toJSON(title));
+		}
+
+		if (values != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"values\": ");
+
 			sb.append("[");
 
 			for (int i = 0; i < values.length; i++) {
-				sb.append(values[i]);
+				sb.append(String.valueOf(values[i]));
 
 				if ((i + 1) < values.length) {
 					sb.append(", ");
@@ -288,6 +354,41 @@ public class Specification {
 			}
 
 			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
 		}
 
 		sb.append("}");

@@ -100,11 +100,15 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinition fetchByExternalReferenceCode(long companyId,
-		String externalReferenceCode) throws PortalException;
+	public CPDefinition fetchCPDefinition(long cpDefinitionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinition fetchCPDefinition(long cpDefinitionId)
+	public CPDefinition fetchCPDefinitionByCProductExternalReferenceCode(
+		long companyId, String externalReferenceCode) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinition fetchCPDefinitionByCProductId(long cProductId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

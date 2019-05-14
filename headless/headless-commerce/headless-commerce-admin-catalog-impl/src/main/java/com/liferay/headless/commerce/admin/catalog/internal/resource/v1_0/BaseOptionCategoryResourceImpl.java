@@ -40,8 +40,8 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -59,18 +59,64 @@ public abstract class BaseOptionCategoryResourceImpl
 	implements OptionCategoryResource {
 
 	@Override
+	@DELETE
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/optionCategories/{id}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "OptionCategory")})
+	public Response deleteOptionCategory(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
+	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/optionCategories/{id}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "OptionCategory")})
+	public OptionCategory getOptionCategory(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+		throws Exception {
+
+		return new OptionCategory();
+	}
+
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PATCH
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/optionCategories/{id}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "OptionCategory")})
+	public Response patchOptionCategory(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			OptionCategory optionCategory)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/commerceAdminCatalog/{groupId}/optionCategory/")
+	@Path("/catalogs/{siteId}/optionCategories/")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OptionCategory")})
-	public Page<OptionCategory> getOptionCategories(
-			@NotNull @PathParam("groupId") Long groupId,
+	public Page<OptionCategory> getCatalogSiteOptionCategoriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -80,61 +126,24 @@ public abstract class BaseOptionCategoryResourceImpl
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Path("/commerceAdminCatalog/{groupId}/optionCategory/")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
+	@Path("/catalogs/{siteId}/optionCategory/")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OptionCategory")})
-	public OptionCategory upsertOptionCategory(
-			@NotNull @PathParam("groupId") Long groupId,
+	public OptionCategory postCatalogSiteOptionCategory(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			OptionCategory optionCategory)
 		throws Exception {
 
 		return new OptionCategory();
 	}
 
-	@Override
-	@DELETE
-	@Path("/optionCategory/{id}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "OptionCategory")})
-	public Response deleteOptionCategory(@NotNull @PathParam("id") Long id)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	@Override
-	@GET
-	@Path("/optionCategory/{id}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "OptionCategory")})
-	public OptionCategory getOptionCategory(@NotNull @PathParam("id") Long id)
-		throws Exception {
-
-		return new OptionCategory();
-	}
-
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@PUT
-	@Path("/optionCategory/{id}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "OptionCategory")})
-	public Response updateOptionCategory(
-			@NotNull @PathParam("id") Long id, OptionCategory optionCategory)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(OptionCategory optionCategory) {
+	protected void preparePatch(
+		OptionCategory optionCategory, OptionCategory existingOptionCategory) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -24,8 +24,12 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -40,9 +44,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("SpecificationValue")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"value"})
 @XmlRootElement(name = "SpecificationValue")
 public class SpecificationValue {
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -56,6 +62,9 @@ public class SpecificationValue {
 		try {
 			id = idUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -65,6 +74,7 @@ public class SpecificationValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public OptionCategory getOptionCategory() {
 		return optionCategory;
 	}
@@ -81,6 +91,9 @@ public class SpecificationValue {
 		try {
 			optionCategory = optionCategoryUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -90,6 +103,7 @@ public class SpecificationValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OptionCategory optionCategory;
 
+	@Schema
 	public Double getPriority() {
 		return priority;
 	}
@@ -105,6 +119,9 @@ public class SpecificationValue {
 		try {
 			priority = priorityUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -114,6 +131,7 @@ public class SpecificationValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@Schema
 	public Product getProduct() {
 		return product;
 	}
@@ -129,6 +147,9 @@ public class SpecificationValue {
 		try {
 			product = productUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -138,6 +159,7 @@ public class SpecificationValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Product product;
 
+	@Schema
 	public Specification getSpecification() {
 		return specification;
 	}
@@ -153,6 +175,9 @@ public class SpecificationValue {
 		try {
 			specification = specificationUnsafeSupplier.get();
 		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -162,6 +187,7 @@ public class SpecificationValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Specification specification;
 
+	@Schema
 	public Map<String, String> getValue() {
 		return value;
 	}
@@ -176,6 +202,9 @@ public class SpecificationValue {
 
 		try {
 			value = valueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -214,34 +243,100 @@ public class SpecificationValue {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append(id);
-		sb.append(", ");
+			sb.append("\"id\": ");
 
-		sb.append("\"optionCategory\": ");
+			sb.append(id);
+		}
 
-		sb.append(optionCategory);
-		sb.append(", ");
+		if (optionCategory != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"priority\": ");
+			sb.append("\"optionCategory\": ");
 
-		sb.append(priority);
-		sb.append(", ");
+			sb.append(String.valueOf(optionCategory));
+		}
 
-		sb.append("\"product\": ");
+		if (priority != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append(product);
-		sb.append(", ");
+			sb.append("\"priority\": ");
 
-		sb.append("\"specification\": ");
+			sb.append(priority);
+		}
 
-		sb.append(specification);
-		sb.append(", ");
+		if (product != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"value\": ");
+			sb.append("\"product\": ");
 
-		sb.append(value);
+			sb.append(String.valueOf(product));
+		}
+
+		if (specification != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specification\": ");
+
+			sb.append(String.valueOf(specification));
+		}
+
+		if (value != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append(_toJSON(value));
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
 
 		sb.append("}");
 

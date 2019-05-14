@@ -35,6 +35,19 @@ public class CPDefinitionLinkServiceImpl
 	extends CPDefinitionLinkServiceBaseImpl {
 
 	@Override
+	public CPDefinitionLink addCPDefinitionLink(
+			long cpDefinitionId, long cProductId, double priority, String type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(
+			cpDefinitionId, cProductId, priority, type, serviceContext);
+	}
+
+	@Override
 	public void deleteCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException {
 
@@ -93,11 +106,34 @@ public class CPDefinitionLinkServiceImpl
 			ActionKeys.VIEW);
 
 		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionLink.getCProductId(),
+			getPermissionChecker(), cpDefinitionLink.getCPDefinitionId(),
 			ActionKeys.VIEW);
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLink(
 			cpDefinitionLinkId);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int start, int end)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId, start, end);
 	}
 
 	@Override
@@ -123,6 +159,17 @@ public class CPDefinitionLinkServiceImpl
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
 			cpDefinitionId, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPDefinitionLinksCount(long cpDefinitionId)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
+			cpDefinitionId);
 	}
 
 	@Override
