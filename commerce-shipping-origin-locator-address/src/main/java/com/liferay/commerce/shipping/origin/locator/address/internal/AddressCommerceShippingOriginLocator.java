@@ -172,13 +172,6 @@ public class AddressCommerceShippingOriginLocator
 		modifiableSettings.store();
 	}
 
-	private CommerceInventoryWarehouse _getDefaultCommerceWarehouse(
-			long groupId)
-		throws PortalException {
-
-		return _commerceWarehouseLocalService.fetchDefaultCommerceWarehouse(
-			groupId);
-	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(

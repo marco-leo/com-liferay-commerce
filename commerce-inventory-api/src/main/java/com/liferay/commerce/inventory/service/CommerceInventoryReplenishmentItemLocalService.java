@@ -73,7 +73,7 @@ public interface CommerceInventoryReplenishmentItemLocalService
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem);
 
 	public CommerceInventoryReplenishmentItem addCommerceReplenishmentItem(
-		long commerceWarehouseId, long userId, String sku,
+		long commerceInventoryWarehouseId, long userId, String sku,
 		Date availabilityDate, int quantity) throws PortalException;
 
 	/**

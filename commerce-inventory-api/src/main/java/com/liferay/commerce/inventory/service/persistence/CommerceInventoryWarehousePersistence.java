@@ -47,7 +47,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param active the active
 	* @return the matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findByactive(
+	public java.util.List<CommerceInventoryWarehouse> findByActive(
 		boolean active);
 
 	/**
@@ -62,7 +62,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findByactive(
+	public java.util.List<CommerceInventoryWarehouse> findByActive(
 		boolean active, int start, int end);
 
 	/**
@@ -78,7 +78,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findByactive(
+	public java.util.List<CommerceInventoryWarehouse> findByActive(
 		boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
@@ -96,7 +96,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findByactive(
+	public java.util.List<CommerceInventoryWarehouse> findByActive(
 		boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
 		boolean retrieveFromCache);
@@ -109,7 +109,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the first matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse findByactive_First(boolean active,
+	public CommerceInventoryWarehouse findByActive_First(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
 
@@ -120,7 +120,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse fetchByactive_First(boolean active,
+	public CommerceInventoryWarehouse fetchByActive_First(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
 	/**
@@ -131,7 +131,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the last matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse findByactive_Last(boolean active,
+	public CommerceInventoryWarehouse findByActive_Last(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
 
@@ -142,7 +142,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse fetchByactive_Last(boolean active,
+	public CommerceInventoryWarehouse fetchByActive_Last(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
 	/**
@@ -154,7 +154,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public CommerceInventoryWarehouse[] findByactive_PrevAndNext(
+	public CommerceInventoryWarehouse[] findByActive_PrevAndNext(
 		long commerceInventoryWarehouseId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
@@ -165,7 +165,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param active the active
 	* @return the matching commerce inventory warehouses that the user has permission to view
 	*/
-	public java.util.List<CommerceInventoryWarehouse> filterFindByactive(
+	public java.util.List<CommerceInventoryWarehouse> filterFindByActive(
 		boolean active);
 
 	/**
@@ -180,7 +180,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public java.util.List<CommerceInventoryWarehouse> filterFindByactive(
+	public java.util.List<CommerceInventoryWarehouse> filterFindByActive(
 		boolean active, int start, int end);
 
 	/**
@@ -196,7 +196,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public java.util.List<CommerceInventoryWarehouse> filterFindByactive(
+	public java.util.List<CommerceInventoryWarehouse> filterFindByActive(
 		boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
@@ -209,7 +209,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public CommerceInventoryWarehouse[] filterFindByactive_PrevAndNext(
+	public CommerceInventoryWarehouse[] filterFindByActive_PrevAndNext(
 		long commerceInventoryWarehouseId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
@@ -219,7 +219,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	*
 	* @param active the active
 	*/
-	public void removeByactive(boolean active);
+	public void removeByActive(boolean active);
 
 	/**
 	* Returns the number of commerce inventory warehouses where active = &#63;.
@@ -227,7 +227,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param active the active
 	* @return the number of matching commerce inventory warehouses
 	*/
-	public int countByactive(boolean active);
+	public int countByActive(boolean active);
 
 	/**
 	* Returns the number of commerce inventory warehouses that the user has permission to view where active = &#63;.
@@ -235,7 +235,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param active the active
 	* @return the number of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public int filterCountByactive(boolean active);
+	public int filterCountByActive(boolean active);
 
 	/**
 	* Returns all the commerce inventory warehouses where countryTwoLettersISOCode = &#63;.
@@ -243,7 +243,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public java.util.List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode);
 
 	/**
@@ -258,7 +258,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public java.util.List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end);
 
 	/**
@@ -274,7 +274,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public java.util.List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
@@ -292,7 +292,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public java.util.List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public java.util.List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
 		boolean retrieveFromCache);
@@ -305,7 +305,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the first matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse findBycountryTwoLettersISOCode_First(
+	public CommerceInventoryWarehouse findByCountryTwoLettersISOCode_First(
 		String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
@@ -317,7 +317,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse fetchBycountryTwoLettersISOCode_First(
+	public CommerceInventoryWarehouse fetchByCountryTwoLettersISOCode_First(
 		String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
@@ -329,7 +329,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the last matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse findBycountryTwoLettersISOCode_Last(
+	public CommerceInventoryWarehouse findByCountryTwoLettersISOCode_Last(
 		String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
@@ -341,7 +341,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public CommerceInventoryWarehouse fetchBycountryTwoLettersISOCode_Last(
+	public CommerceInventoryWarehouse fetchByCountryTwoLettersISOCode_Last(
 		String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
@@ -354,7 +354,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public CommerceInventoryWarehouse[] findBycountryTwoLettersISOCode_PrevAndNext(
+	public CommerceInventoryWarehouse[] findByCountryTwoLettersISOCode_PrevAndNext(
 		long commerceInventoryWarehouseId, String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
@@ -365,7 +365,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the matching commerce inventory warehouses that the user has permission to view
 	*/
-	public java.util.List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public java.util.List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode);
 
 	/**
@@ -380,7 +380,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public java.util.List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public java.util.List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end);
 
 	/**
@@ -396,7 +396,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public java.util.List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public java.util.List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator);
 
@@ -409,7 +409,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public CommerceInventoryWarehouse[] filterFindBycountryTwoLettersISOCode_PrevAndNext(
+	public CommerceInventoryWarehouse[] filterFindByCountryTwoLettersISOCode_PrevAndNext(
 		long commerceInventoryWarehouseId, String countryTwoLettersISOCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException;
@@ -419,7 +419,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	*
 	* @param countryTwoLettersISOCode the country two letters iso code
 	*/
-	public void removeBycountryTwoLettersISOCode(
+	public void removeByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode);
 
 	/**
@@ -428,7 +428,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the number of matching commerce inventory warehouses
 	*/
-	public int countBycountryTwoLettersISOCode(String countryTwoLettersISOCode);
+	public int countByCountryTwoLettersISOCode(String countryTwoLettersISOCode);
 
 	/**
 	* Returns the number of commerce inventory warehouses that the user has permission to view where countryTwoLettersISOCode = &#63;.
@@ -436,7 +436,7 @@ public interface CommerceInventoryWarehousePersistence extends BasePersistence<C
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the number of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public int filterCountBycountryTwoLettersISOCode(
+	public int filterCountByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode);
 
 	/**

@@ -21,7 +21,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="sku" type="String" />
 		<field name="quantity" type="int" />
-		<field name="expireDate" type="Date" />
+		<field name="expirationDate" type="Date" />
 		<field name="bookedNote" type="String" />
 	</model>
 	<model name="com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem">
@@ -31,7 +31,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceWarehouseId" type="long" />
+		<field name="commerceInventoryWarehouseId" type="long" />
 		<field name="sku" type="String" />
 		<field name="availabilityDate" type="Date" />
 		<field name="quantity" type="int" />
@@ -66,7 +66,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceWarehouseId" type="long" />
+		<field name="commerceInventoryWarehouseId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem">
@@ -76,7 +76,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceWarehouseId" type="long" />
+		<field name="commerceInventoryWarehouseId" type="long" />
 		<field name="sku" type="String" />
 		<field name="quantity" type="int" />
 		<field name="reservedQuantity" type="int" />

@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
-import com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditFinder;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditPersistence;
-import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityFinder;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemFinder;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemPersistence;
@@ -374,25 +372,6 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce inventory audit finder.
-	 *
-	 * @return the commerce inventory audit finder
-	 */
-	public CommerceInventoryAuditFinder getCommerceInventoryAuditFinder() {
-		return commerceInventoryAuditFinder;
-	}
-
-	/**
-	 * Sets the commerce inventory audit finder.
-	 *
-	 * @param commerceInventoryAuditFinder the commerce inventory audit finder
-	 */
-	public void setCommerceInventoryAuditFinder(
-		CommerceInventoryAuditFinder commerceInventoryAuditFinder) {
-		this.commerceInventoryAuditFinder = commerceInventoryAuditFinder;
-	}
-
-	/**
 	 * Returns the commerce inventory booked quantity local service.
 	 *
 	 * @return the commerce inventory booked quantity local service
@@ -428,25 +407,6 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 	public void setCommerceInventoryBookedQuantityPersistence(
 		CommerceInventoryBookedQuantityPersistence commerceInventoryBookedQuantityPersistence) {
 		this.commerceInventoryBookedQuantityPersistence = commerceInventoryBookedQuantityPersistence;
-	}
-
-	/**
-	 * Returns the commerce inventory booked quantity finder.
-	 *
-	 * @return the commerce inventory booked quantity finder
-	 */
-	public CommerceInventoryBookedQuantityFinder getCommerceInventoryBookedQuantityFinder() {
-		return commerceInventoryBookedQuantityFinder;
-	}
-
-	/**
-	 * Sets the commerce inventory booked quantity finder.
-	 *
-	 * @param commerceInventoryBookedQuantityFinder the commerce inventory booked quantity finder
-	 */
-	public void setCommerceInventoryBookedQuantityFinder(
-		CommerceInventoryBookedQuantityFinder commerceInventoryBookedQuantityFinder) {
-		this.commerceInventoryBookedQuantityFinder = commerceInventoryBookedQuantityFinder;
 	}
 
 	/**
@@ -827,14 +787,10 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 	protected com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService commerceInventoryAuditLocalService;
 	@BeanReference(type = CommerceInventoryAuditPersistence.class)
 	protected CommerceInventoryAuditPersistence commerceInventoryAuditPersistence;
-	@BeanReference(type = CommerceInventoryAuditFinder.class)
-	protected CommerceInventoryAuditFinder commerceInventoryAuditFinder;
 	@BeanReference(type = com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService.class)
 	protected com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService commerceInventoryBookedQuantityLocalService;
 	@BeanReference(type = CommerceInventoryBookedQuantityPersistence.class)
 	protected CommerceInventoryBookedQuantityPersistence commerceInventoryBookedQuantityPersistence;
-	@BeanReference(type = CommerceInventoryBookedQuantityFinder.class)
-	protected CommerceInventoryBookedQuantityFinder commerceInventoryBookedQuantityFinder;
 	@BeanReference(type = com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService.class)
 	protected com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService commerceInventoryReplenishmentItemLocalService;
 	@BeanReference(type = CommerceInventoryReplenishmentItemPersistence.class)

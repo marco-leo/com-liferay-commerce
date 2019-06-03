@@ -48,10 +48,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem addCommerceReplenishmentItem(
-		long commerceWarehouseId, long userId, String sku,
+		long commerceInventoryWarehouseId, long userId, String sku,
 		java.util.Date availabilityDate, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceInventoryReplenishmentItemLocalService.addCommerceReplenishmentItem(commerceWarehouseId,
+		return _commerceInventoryReplenishmentItemLocalService.addCommerceReplenishmentItem(commerceInventoryWarehouseId,
 			userId, sku, availabilityDate, quantity);
 	}
 

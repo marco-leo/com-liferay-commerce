@@ -48,7 +48,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @param groupId the group ID
 	* @return the matching commerce inventory warehouse group rels
 	*/
-	public java.util.List<CommerceInventoryWarehouseGroupRel> findBygroupId(
+	public java.util.List<CommerceInventoryWarehouseGroupRel> findByGroupId(
 		long groupId);
 
 	/**
@@ -63,7 +63,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @param end the upper bound of the range of commerce inventory warehouse group rels (not inclusive)
 	* @return the range of matching commerce inventory warehouse group rels
 	*/
-	public java.util.List<CommerceInventoryWarehouseGroupRel> findBygroupId(
+	public java.util.List<CommerceInventoryWarehouseGroupRel> findByGroupId(
 		long groupId, int start, int end);
 
 	/**
@@ -79,7 +79,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouse group rels
 	*/
-	public java.util.List<CommerceInventoryWarehouseGroupRel> findBygroupId(
+	public java.util.List<CommerceInventoryWarehouseGroupRel> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouseGroupRel> orderByComparator);
 
@@ -97,7 +97,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce inventory warehouse group rels
 	*/
-	public java.util.List<CommerceInventoryWarehouseGroupRel> findBygroupId(
+	public java.util.List<CommerceInventoryWarehouseGroupRel> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouseGroupRel> orderByComparator,
 		boolean retrieveFromCache);
@@ -110,7 +110,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @return the first matching commerce inventory warehouse group rel
 	* @throws NoSuchInventoryWarehouseGroupRelException if a matching commerce inventory warehouse group rel could not be found
 	*/
-	public CommerceInventoryWarehouseGroupRel findBygroupId_First(
+	public CommerceInventoryWarehouseGroupRel findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouseGroupRel> orderByComparator)
 		throws NoSuchInventoryWarehouseGroupRelException;
@@ -122,7 +122,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce inventory warehouse group rel, or <code>null</code> if a matching commerce inventory warehouse group rel could not be found
 	*/
-	public CommerceInventoryWarehouseGroupRel fetchBygroupId_First(
+	public CommerceInventoryWarehouseGroupRel fetchByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouseGroupRel> orderByComparator);
 
@@ -134,7 +134,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @return the last matching commerce inventory warehouse group rel
 	* @throws NoSuchInventoryWarehouseGroupRelException if a matching commerce inventory warehouse group rel could not be found
 	*/
-	public CommerceInventoryWarehouseGroupRel findBygroupId_Last(long groupId,
+	public CommerceInventoryWarehouseGroupRel findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouseGroupRel> orderByComparator)
 		throws NoSuchInventoryWarehouseGroupRelException;
 
@@ -145,7 +145,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce inventory warehouse group rel, or <code>null</code> if a matching commerce inventory warehouse group rel could not be found
 	*/
-	public CommerceInventoryWarehouseGroupRel fetchBygroupId_Last(
+	public CommerceInventoryWarehouseGroupRel fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouseGroupRel> orderByComparator);
 
@@ -158,7 +158,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @return the previous, current, and next commerce inventory warehouse group rel
 	* @throws NoSuchInventoryWarehouseGroupRelException if a commerce inventory warehouse group rel with the primary key could not be found
 	*/
-	public CommerceInventoryWarehouseGroupRel[] findBygroupId_PrevAndNext(
+	public CommerceInventoryWarehouseGroupRel[] findByGroupId_PrevAndNext(
 		long commerceInventoryWarehouseGroupRelId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryWarehouseGroupRel> orderByComparator)
 		throws NoSuchInventoryWarehouseGroupRelException;
@@ -168,7 +168,7 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	*
 	* @param groupId the group ID
 	*/
-	public void removeBygroupId(long groupId);
+	public void removeByGroupId(long groupId);
 
 	/**
 	* Returns the number of commerce inventory warehouse group rels where groupId = &#63;.
@@ -176,60 +176,60 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	* @param groupId the group ID
 	* @return the number of matching commerce inventory warehouse group rels
 	*/
-	public int countBygroupId(long groupId);
+	public int countByGroupId(long groupId);
 
 	/**
-	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; or throws a {@link NoSuchInventoryWarehouseGroupRelException} if it could not be found.
+	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; or throws a {@link NoSuchInventoryWarehouseGroupRelException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @return the matching commerce inventory warehouse group rel
 	* @throws NoSuchInventoryWarehouseGroupRelException if a matching commerce inventory warehouse group rel could not be found
 	*/
 	public CommerceInventoryWarehouseGroupRel findByG_CWI(long groupId,
-		long commerceWarehouseId)
+		long commerceInventoryWarehouseId)
 		throws NoSuchInventoryWarehouseGroupRelException;
 
 	/**
-	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @return the matching commerce inventory warehouse group rel, or <code>null</code> if a matching commerce inventory warehouse group rel could not be found
 	*/
 	public CommerceInventoryWarehouseGroupRel fetchByG_CWI(long groupId,
-		long commerceWarehouseId);
+		long commerceInventoryWarehouseId);
 
 	/**
-	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce inventory warehouse group rel, or <code>null</code> if a matching commerce inventory warehouse group rel could not be found
 	*/
 	public CommerceInventoryWarehouseGroupRel fetchByG_CWI(long groupId,
-		long commerceWarehouseId, boolean retrieveFromCache);
+		long commerceInventoryWarehouseId, boolean retrieveFromCache);
 
 	/**
-	* Removes the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; from the database.
+	* Removes the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @return the commerce inventory warehouse group rel that was removed
 	*/
 	public CommerceInventoryWarehouseGroupRel removeByG_CWI(long groupId,
-		long commerceWarehouseId)
+		long commerceInventoryWarehouseId)
 		throws NoSuchInventoryWarehouseGroupRelException;
 
 	/**
-	* Returns the number of commerce inventory warehouse group rels where groupId = &#63; and commerceWarehouseId = &#63;.
+	* Returns the number of commerce inventory warehouse group rels where groupId = &#63; and commerceInventoryWarehouseId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @return the number of matching commerce inventory warehouse group rels
 	*/
-	public int countByG_CWI(long groupId, long commerceWarehouseId);
+	public int countByG_CWI(long groupId, long commerceInventoryWarehouseId);
 
 	/**
 	* Returns all the commerce inventory warehouse group rels where groupId = &#63; and primary = &#63;.
@@ -381,62 +381,63 @@ public interface CommerceInventoryWarehouseGroupRelPersistence
 	public int countByG_P(long groupId, boolean primary);
 
 	/**
-	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; and primary = &#63; or throws a {@link NoSuchInventoryWarehouseGroupRelException} if it could not be found.
+	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; and primary = &#63; or throws a {@link NoSuchInventoryWarehouseGroupRelException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @param primary the primary
 	* @return the matching commerce inventory warehouse group rel
 	* @throws NoSuchInventoryWarehouseGroupRelException if a matching commerce inventory warehouse group rel could not be found
 	*/
 	public CommerceInventoryWarehouseGroupRel findByG_CWI_P(long groupId,
-		long commerceWarehouseId, boolean primary)
+		long commerceInventoryWarehouseId, boolean primary)
 		throws NoSuchInventoryWarehouseGroupRelException;
 
 	/**
-	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @param primary the primary
 	* @return the matching commerce inventory warehouse group rel, or <code>null</code> if a matching commerce inventory warehouse group rel could not be found
 	*/
 	public CommerceInventoryWarehouseGroupRel fetchByG_CWI_P(long groupId,
-		long commerceWarehouseId, boolean primary);
+		long commerceInventoryWarehouseId, boolean primary);
 
 	/**
-	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @param primary the primary
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce inventory warehouse group rel, or <code>null</code> if a matching commerce inventory warehouse group rel could not be found
 	*/
 	public CommerceInventoryWarehouseGroupRel fetchByG_CWI_P(long groupId,
-		long commerceWarehouseId, boolean primary, boolean retrieveFromCache);
+		long commerceInventoryWarehouseId, boolean primary,
+		boolean retrieveFromCache);
 
 	/**
-	* Removes the commerce inventory warehouse group rel where groupId = &#63; and commerceWarehouseId = &#63; and primary = &#63; from the database.
+	* Removes the commerce inventory warehouse group rel where groupId = &#63; and commerceInventoryWarehouseId = &#63; and primary = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @param primary the primary
 	* @return the commerce inventory warehouse group rel that was removed
 	*/
 	public CommerceInventoryWarehouseGroupRel removeByG_CWI_P(long groupId,
-		long commerceWarehouseId, boolean primary)
+		long commerceInventoryWarehouseId, boolean primary)
 		throws NoSuchInventoryWarehouseGroupRelException;
 
 	/**
-	* Returns the number of commerce inventory warehouse group rels where groupId = &#63; and commerceWarehouseId = &#63; and primary = &#63;.
+	* Returns the number of commerce inventory warehouse group rels where groupId = &#63; and commerceInventoryWarehouseId = &#63; and primary = &#63;.
 	*
 	* @param groupId the group ID
-	* @param commerceWarehouseId the commerce warehouse ID
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	* @param primary the primary
 	* @return the number of matching commerce inventory warehouse group rels
 	*/
-	public int countByG_CWI_P(long groupId, long commerceWarehouseId,
+	public int countByG_CWI_P(long groupId, long commerceInventoryWarehouseId,
 		boolean primary);
 
 	/**

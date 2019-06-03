@@ -16,7 +16,6 @@ package com.liferay.commerce.inventory.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -72,13 +71,9 @@ public interface CommerceInventoryWarehouseItemLocalService
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem);
 
-	public CommerceInventoryWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, String sku, int quantity, long userId)
+	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;
-
-	public CommerceInventoryWarehouseItem addStockQuantity(
-		long commerceWarehouseItemId, int quantity)
-		throws NoSuchInventoryWarehouseItemException;
 
 	/**
 	* Creates a new commerce inventory warehouse item with the primary key. Does not add the commerce inventory warehouse item to the database.
@@ -111,7 +106,8 @@ public interface CommerceInventoryWarehouseItemLocalService
 	public CommerceInventoryWarehouseItem deleteCommerceInventoryWarehouseItem(
 		long commerceInventoryWarehouseItemId) throws PortalException;
 
-	public void deleteCommerceWarehouseItems(long commerceWarehouseId);
+	public void deleteCommerceInventoryWarehouseItemsByInventoryWarehouseId(
+		long commerceInventoryWarehouseId);
 
 	/**
 	* @throws PortalException
@@ -190,8 +186,9 @@ public interface CommerceInventoryWarehouseItemLocalService
 		long commerceInventoryWarehouseItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventoryWarehouseItem fetchCommerceWarehouseItem(
-		long commerceWarehouseId, String sku);
+	public CommerceInventoryWarehouseItem fetchCommerceInventoryWarehouseItemByC_S(
+		long commerceInventoryWarehouseId, String sku)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -231,20 +228,8 @@ public interface CommerceInventoryWarehouseItemLocalService
 	public int getCommerceInventoryWarehouseItemsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventoryWarehouseItem getCommerceWarehouseItem(
-		long commerceWarehouseId, String sku)
-		throws NoSuchInventoryWarehouseItemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceInventoryWarehouseItem> getCommerceWarehouseItems(
-		String sku);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceInventoryWarehouseItem> getCommerceWarehouseItemsByCommerceWarehouseId(
-		long commerceWarehouseId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceWarehouseItemsCount(String sku);
+	public List<CommerceInventoryWarehouseItem> getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -262,11 +247,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getStockQuantityByGroupIdAndSku(long companyId, long groupId,
-		String sku);
+	public int getStockQuantityByG_S(long companyId, long groupId, String sku);
 
-	public CommerceInventoryWarehouseItem removeStockQuantity(
-		long commerceWarehouseItemId, int quantity) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStockQuantityBySku(long companyId, String sku);
 
 	/**
 	* Updates the commerce inventory warehouse item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -278,6 +262,11 @@ public interface CommerceInventoryWarehouseItemLocalService
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem);
 
-	public CommerceInventoryWarehouseItem updateCommerceWarehouseItem(
-		long commerceWarehouseItemId, int quantity) throws PortalException;
+	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
+		long commerceInventoryWarehouseItemId, int quantity)
+		throws PortalException;
+
+	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException;
 }

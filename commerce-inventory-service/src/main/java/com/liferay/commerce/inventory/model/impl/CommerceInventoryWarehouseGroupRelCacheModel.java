@@ -82,8 +82,8 @@ public class CommerceInventoryWarehouseGroupRelCacheModel implements CacheModel<
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", commerceWarehouseId=");
-		sb.append(commerceWarehouseId);
+		sb.append(", commerceInventoryWarehouseId=");
+		sb.append(commerceInventoryWarehouseId);
 		sb.append(", primary=");
 		sb.append(primary);
 		sb.append("}");
@@ -124,7 +124,7 @@ public class CommerceInventoryWarehouseGroupRelCacheModel implements CacheModel<
 					modifiedDate));
 		}
 
-		commerceInventoryWarehouseGroupRelImpl.setCommerceWarehouseId(commerceWarehouseId);
+		commerceInventoryWarehouseGroupRelImpl.setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 		commerceInventoryWarehouseGroupRelImpl.setPrimary(primary);
 
 		commerceInventoryWarehouseGroupRelImpl.resetOriginalValues();
@@ -145,7 +145,7 @@ public class CommerceInventoryWarehouseGroupRelCacheModel implements CacheModel<
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		commerceWarehouseId = objectInput.readLong();
+		commerceInventoryWarehouseId = objectInput.readLong();
 
 		primary = objectInput.readBoolean();
 	}
@@ -171,7 +171,7 @@ public class CommerceInventoryWarehouseGroupRelCacheModel implements CacheModel<
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(commerceWarehouseId);
+		objectOutput.writeLong(commerceInventoryWarehouseId);
 
 		objectOutput.writeBoolean(primary);
 	}
@@ -183,6 +183,6 @@ public class CommerceInventoryWarehouseGroupRelCacheModel implements CacheModel<
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long commerceWarehouseId;
+	public long commerceInventoryWarehouseId;
 	public boolean primary;
 }

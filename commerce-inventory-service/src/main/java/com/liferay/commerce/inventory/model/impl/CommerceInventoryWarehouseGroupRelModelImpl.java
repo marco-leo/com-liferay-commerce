@@ -77,7 +77,7 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "commerceWarehouseId", Types.BIGINT },
+			{ "commerceInventoryWarehouseId", Types.BIGINT },
 			{ "primary_", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -90,11 +90,11 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("commerceWarehouseId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceInventoryWarehouseId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CIWarehouseGroupRel (CIWarehouseGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceWarehouseId LONG,primary_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CIWarehouseGroupRel (CIWarehouseGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceInventoryWarehouseId LONG,primary_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CIWarehouseGroupRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceInventoryWarehouseGroupRel.commerceInventoryWarehouseGroupRelId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CIWarehouseGroupRel.CIWarehouseGroupRelId ASC";
@@ -110,7 +110,7 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.inventory.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.inventory.model.CommerceInventoryWarehouseGroupRel"),
 			true);
-	public static final long COMMERCEWAREHOUSEID_COLUMN_BITMASK = 1L;
+	public static final long COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long PRIMARY_COLUMN_BITMASK = 4L;
 	public static final long COMMERCEINVENTORYWAREHOUSEGROUPRELID_COLUMN_BITMASK =
@@ -137,7 +137,7 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceWarehouseId(soapModel.getCommerceWarehouseId());
+		model.setCommerceInventoryWarehouseId(soapModel.getCommerceInventoryWarehouseId());
 		model.setPrimary(soapModel.isPrimary());
 
 		return model;
@@ -212,7 +212,8 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
+		attributes.put("commerceInventoryWarehouseId",
+			getCommerceInventoryWarehouseId());
 		attributes.put("primary", isPrimary());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -266,10 +267,11 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceWarehouseId = (Long)attributes.get("commerceWarehouseId");
+		Long commerceInventoryWarehouseId = (Long)attributes.get(
+				"commerceInventoryWarehouseId");
 
-		if (commerceWarehouseId != null) {
-			setCommerceWarehouseId(commerceWarehouseId);
+		if (commerceInventoryWarehouseId != null) {
+			setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 		}
 
 		Boolean primary = (Boolean)attributes.get("primary");
@@ -398,25 +400,26 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 
 	@JSON
 	@Override
-	public long getCommerceWarehouseId() {
-		return _commerceWarehouseId;
+	public long getCommerceInventoryWarehouseId() {
+		return _commerceInventoryWarehouseId;
 	}
 
 	@Override
-	public void setCommerceWarehouseId(long commerceWarehouseId) {
-		_columnBitmask |= COMMERCEWAREHOUSEID_COLUMN_BITMASK;
+	public void setCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId) {
+		_columnBitmask |= COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK;
 
-		if (!_setOriginalCommerceWarehouseId) {
-			_setOriginalCommerceWarehouseId = true;
+		if (!_setOriginalCommerceInventoryWarehouseId) {
+			_setOriginalCommerceInventoryWarehouseId = true;
 
-			_originalCommerceWarehouseId = _commerceWarehouseId;
+			_originalCommerceInventoryWarehouseId = _commerceInventoryWarehouseId;
 		}
 
-		_commerceWarehouseId = commerceWarehouseId;
+		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
 	}
 
-	public long getOriginalCommerceWarehouseId() {
-		return _originalCommerceWarehouseId;
+	public long getOriginalCommerceInventoryWarehouseId() {
+		return _originalCommerceInventoryWarehouseId;
 	}
 
 	@JSON
@@ -487,7 +490,7 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 		commerceInventoryWarehouseGroupRelImpl.setUserName(getUserName());
 		commerceInventoryWarehouseGroupRelImpl.setCreateDate(getCreateDate());
 		commerceInventoryWarehouseGroupRelImpl.setModifiedDate(getModifiedDate());
-		commerceInventoryWarehouseGroupRelImpl.setCommerceWarehouseId(getCommerceWarehouseId());
+		commerceInventoryWarehouseGroupRelImpl.setCommerceInventoryWarehouseId(getCommerceInventoryWarehouseId());
 		commerceInventoryWarehouseGroupRelImpl.setPrimary(isPrimary());
 
 		commerceInventoryWarehouseGroupRelImpl.resetOriginalValues();
@@ -559,9 +562,9 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 
 		commerceInventoryWarehouseGroupRelModelImpl._setModifiedDate = false;
 
-		commerceInventoryWarehouseGroupRelModelImpl._originalCommerceWarehouseId = commerceInventoryWarehouseGroupRelModelImpl._commerceWarehouseId;
+		commerceInventoryWarehouseGroupRelModelImpl._originalCommerceInventoryWarehouseId = commerceInventoryWarehouseGroupRelModelImpl._commerceInventoryWarehouseId;
 
-		commerceInventoryWarehouseGroupRelModelImpl._setOriginalCommerceWarehouseId = false;
+		commerceInventoryWarehouseGroupRelModelImpl._setOriginalCommerceInventoryWarehouseId = false;
 
 		commerceInventoryWarehouseGroupRelModelImpl._originalPrimary = commerceInventoryWarehouseGroupRelModelImpl._primary;
 
@@ -609,7 +612,7 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 			commerceInventoryWarehouseGroupRelCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceInventoryWarehouseGroupRelCacheModel.commerceWarehouseId = getCommerceWarehouseId();
+		commerceInventoryWarehouseGroupRelCacheModel.commerceInventoryWarehouseId = getCommerceInventoryWarehouseId();
 
 		commerceInventoryWarehouseGroupRelCacheModel.primary = isPrimary();
 
@@ -634,8 +637,8 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", commerceWarehouseId=");
-		sb.append(getCommerceWarehouseId());
+		sb.append(", commerceInventoryWarehouseId=");
+		sb.append(getCommerceInventoryWarehouseId());
 		sb.append(", primary=");
 		sb.append(isPrimary());
 		sb.append("}");
@@ -681,8 +684,8 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>commerceWarehouseId</column-name><column-value><![CDATA[");
-		sb.append(getCommerceWarehouseId());
+			"<column><column-name>commerceInventoryWarehouseId</column-name><column-value><![CDATA[");
+		sb.append(getCommerceInventoryWarehouseId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
@@ -708,9 +711,9 @@ public class CommerceInventoryWarehouseGroupRelModelImpl extends BaseModelImpl<C
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _commerceWarehouseId;
-	private long _originalCommerceWarehouseId;
-	private boolean _setOriginalCommerceWarehouseId;
+	private long _commerceInventoryWarehouseId;
+	private long _originalCommerceInventoryWarehouseId;
+	private boolean _setOriginalCommerceInventoryWarehouseId;
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;

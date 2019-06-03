@@ -12,34 +12,39 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.configuration;
+package com.liferay.commerce.inventory.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Luca Pellizzon
  */
 @ExtendedObjectClassDefinition(
-	category = "inventory", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "inventory", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.inventory.configuration.CommerceInventoryGroupConfiguration",
+	id = "com.liferay.commerce.inventory.configuration.CommerceInventorySystemConfiguration",
 	localization = "content/Language",
-	name = "commerce-inventory-group-configuration-name"
+	name = "commerce-inventory-system-configuration-name"
 )
-public interface CommerceInventoryGroupConfiguration {
+public interface CommerceInventorySystemConfiguration {
 
 	@Meta.AD(
-		deflt = "default", name = "inventory-engine-method", required = false
-	)
-	public String commerceInventoryEngineMethod();
-
-	@Meta.AD(
-		deflt = "false", name = "override-system-configuration",
+		deflt = "60", name = "check-temporary-booked-quantity-interval",
 		required = false
 	)
-	public boolean overrideSystemConfiguration();
+	public int checkCommerceInventoryTemporaryBookedQuantityInterval();
+
+	@Meta.AD(
+		deflt = "60", name = "check-inventory-audit-interval", required = false
+	)
+	public int checkCommerceInventoryAuditQuantityInterval();
+
+	@Meta.AD(
+		deflt = "12", name = "delete-inventory-audit-month-interval",
+		required = false
+	)
+	public int deleteAuditMonthInterval();
 
 }

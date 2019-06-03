@@ -42,7 +42,7 @@ public class CommerceInventoryWarehouseGroupRelSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCommerceWarehouseId(model.getCommerceWarehouseId());
+		soapModel.setCommerceInventoryWarehouseId(model.getCommerceInventoryWarehouseId());
 		soapModel.setPrimary(model.isPrimary());
 
 		return soapModel;
@@ -156,12 +156,13 @@ public class CommerceInventoryWarehouseGroupRelSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getCommerceWarehouseId() {
-		return _commerceWarehouseId;
+	public long getCommerceInventoryWarehouseId() {
+		return _commerceInventoryWarehouseId;
 	}
 
-	public void setCommerceWarehouseId(long commerceWarehouseId) {
-		_commerceWarehouseId = commerceWarehouseId;
+	public void setCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId) {
+		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
 	}
 
 	public boolean getPrimary() {
@@ -183,6 +184,6 @@ public class CommerceInventoryWarehouseGroupRelSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _commerceWarehouseId;
+	private long _commerceInventoryWarehouseId;
 	private boolean _primary;
 }

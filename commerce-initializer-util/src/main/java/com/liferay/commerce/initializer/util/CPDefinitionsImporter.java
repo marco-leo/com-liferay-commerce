@@ -253,9 +253,10 @@ public class CPDefinitionsImporter {
 				"Warehouse" + String.valueOf(i + 1));
 
 			if (quantity > 0) {
-				_commerceWarehouseItemLocalService.addCommerceWarehouseItem(
-					commerceWarehouseId, cpInstance.getSku(), quantity,
-					serviceContext.getUserId());
+				_commerceInventoryWarehouseItemLocalService.
+					addCommerceInventoryWarehouseItem(
+						serviceContext.getUserId(), commerceWarehouseId,
+						cpInstance.getSku(), quantity);
 			}
 		}
 	}
@@ -793,7 +794,7 @@ public class CPDefinitionsImporter {
 
 	@Reference
 	private CommerceInventoryWarehouseItemLocalService
-		_commerceWarehouseItemLocalService;
+		_commerceInventoryWarehouseItemLocalService;
 
 	@Reference
 	private CPAttachmentFileEntryCreator _cpAttachmentFileEntryCreator;

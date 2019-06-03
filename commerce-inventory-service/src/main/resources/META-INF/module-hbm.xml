@@ -32,7 +32,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="expireDate" type="org.hibernate.type.TimestampType" />
+		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="bookedNote" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemImpl" table="CIReplenishmentItem">
@@ -44,7 +44,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="commerceWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceInventoryWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="availabilityDate" type="org.hibernate.type.TimestampType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -83,7 +83,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="commerceWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceInventoryWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property column="primary_" name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemImpl" table="CIWarehouseItem">
@@ -95,7 +95,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="commerceWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceInventoryWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="reservedQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

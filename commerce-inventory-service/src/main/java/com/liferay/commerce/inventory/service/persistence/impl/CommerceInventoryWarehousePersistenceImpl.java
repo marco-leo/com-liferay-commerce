@@ -101,7 +101,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ACTIVE = new FinderPath(CommerceInventoryWarehouseModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryWarehouseModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryWarehouseImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByactive",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
 			new String[] {
 				Boolean.class.getName(),
 				
@@ -112,14 +112,14 @@ public class CommerceInventoryWarehousePersistenceImpl
 		new FinderPath(CommerceInventoryWarehouseModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryWarehouseModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryWarehouseImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByactive",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
 			new String[] { Boolean.class.getName() },
 			CommerceInventoryWarehouseModelImpl.ACTIVE_COLUMN_BITMASK |
 			CommerceInventoryWarehouseModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ACTIVE = new FinderPath(CommerceInventoryWarehouseModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryWarehouseModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByactive", new String[] { Boolean.class.getName() });
+			"countByActive", new String[] { Boolean.class.getName() });
 
 	/**
 	 * Returns all the commerce inventory warehouses where active = &#63;.
@@ -128,8 +128,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findByactive(boolean active) {
-		return findByactive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CommerceInventoryWarehouse> findByActive(boolean active) {
+		return findByActive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -145,9 +145,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the range of matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findByactive(boolean active,
+	public List<CommerceInventoryWarehouse> findByActive(boolean active,
 		int start, int end) {
-		return findByactive(active, start, end, null);
+		return findByActive(active, start, end, null);
 	}
 
 	/**
@@ -164,10 +164,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the ordered range of matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findByactive(boolean active,
+	public List<CommerceInventoryWarehouse> findByActive(boolean active,
 		int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		return findByactive(active, start, end, orderByComparator, true);
+		return findByActive(active, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the ordered range of matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findByactive(boolean active,
+	public List<CommerceInventoryWarehouse> findByActive(boolean active,
 		int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
 		boolean retrieveFromCache) {
@@ -297,10 +297,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse findByactive_First(boolean active,
+	public CommerceInventoryWarehouse findByActive_First(boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
-		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchByactive_First(active,
+		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchByActive_First(active,
 				orderByComparator);
 
 		if (commerceInventoryWarehouse != null) {
@@ -327,9 +327,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse fetchByactive_First(boolean active,
+	public CommerceInventoryWarehouse fetchByActive_First(boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		List<CommerceInventoryWarehouse> list = findByactive(active, 0, 1,
+		List<CommerceInventoryWarehouse> list = findByActive(active, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -348,10 +348,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse findByactive_Last(boolean active,
+	public CommerceInventoryWarehouse findByActive_Last(boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
-		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchByactive_Last(active,
+		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchByActive_Last(active,
 				orderByComparator);
 
 		if (commerceInventoryWarehouse != null) {
@@ -378,15 +378,15 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse fetchByactive_Last(boolean active,
+	public CommerceInventoryWarehouse fetchByActive_Last(boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		int count = countByactive(active);
+		int count = countByActive(active);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceInventoryWarehouse> list = findByactive(active, count - 1,
+		List<CommerceInventoryWarehouse> list = findByActive(active, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -406,7 +406,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse[] findByactive_PrevAndNext(
+	public CommerceInventoryWarehouse[] findByActive_PrevAndNext(
 		long commerceInventoryWarehouseId, boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
@@ -419,12 +419,12 @@ public class CommerceInventoryWarehousePersistenceImpl
 
 			CommerceInventoryWarehouse[] array = new CommerceInventoryWarehouseImpl[3];
 
-			array[0] = getByactive_PrevAndNext(session,
+			array[0] = getByActive_PrevAndNext(session,
 					commerceInventoryWarehouse, active, orderByComparator, true);
 
 			array[1] = commerceInventoryWarehouse;
 
-			array[2] = getByactive_PrevAndNext(session,
+			array[2] = getByActive_PrevAndNext(session,
 					commerceInventoryWarehouse, active, orderByComparator, false);
 
 			return array;
@@ -437,7 +437,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 	}
 
-	protected CommerceInventoryWarehouse getByactive_PrevAndNext(
+	protected CommerceInventoryWarehouse getByActive_PrevAndNext(
 		Session session, CommerceInventoryWarehouse commerceInventoryWarehouse,
 		boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
@@ -552,8 +552,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> filterFindByactive(boolean active) {
-		return filterFindByactive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+	public List<CommerceInventoryWarehouse> filterFindByActive(boolean active) {
+		return filterFindByActive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
 
@@ -570,9 +570,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the range of matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> filterFindByactive(boolean active,
+	public List<CommerceInventoryWarehouse> filterFindByActive(boolean active,
 		int start, int end) {
-		return filterFindByactive(active, start, end, null);
+		return filterFindByActive(active, start, end, null);
 	}
 
 	/**
@@ -589,11 +589,11 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the ordered range of matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> filterFindByactive(boolean active,
+	public List<CommerceInventoryWarehouse> filterFindByActive(boolean active,
 		int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByactive(active, start, end, orderByComparator);
+			return findByActive(active, start, end, orderByComparator);
 		}
 
 		StringBundler query = null;
@@ -683,12 +683,12 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse[] filterFindByactive_PrevAndNext(
+	public CommerceInventoryWarehouse[] filterFindByActive_PrevAndNext(
 		long commerceInventoryWarehouseId, boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByactive_PrevAndNext(commerceInventoryWarehouseId,
+			return findByActive_PrevAndNext(commerceInventoryWarehouseId,
 				active, orderByComparator);
 		}
 
@@ -701,12 +701,12 @@ public class CommerceInventoryWarehousePersistenceImpl
 
 			CommerceInventoryWarehouse[] array = new CommerceInventoryWarehouseImpl[3];
 
-			array[0] = filterGetByactive_PrevAndNext(session,
+			array[0] = filterGetByActive_PrevAndNext(session,
 					commerceInventoryWarehouse, active, orderByComparator, true);
 
 			array[1] = commerceInventoryWarehouse;
 
-			array[2] = filterGetByactive_PrevAndNext(session,
+			array[2] = filterGetByActive_PrevAndNext(session,
 					commerceInventoryWarehouse, active, orderByComparator, false);
 
 			return array;
@@ -719,7 +719,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 	}
 
-	protected CommerceInventoryWarehouse filterGetByactive_PrevAndNext(
+	protected CommerceInventoryWarehouse filterGetByActive_PrevAndNext(
 		Session session, CommerceInventoryWarehouse commerceInventoryWarehouse,
 		boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
@@ -870,8 +870,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @param active the active
 	 */
 	@Override
-	public void removeByactive(boolean active) {
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse : findByactive(
+	public void removeByActive(boolean active) {
+		for (CommerceInventoryWarehouse commerceInventoryWarehouse : findByActive(
 				active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(commerceInventoryWarehouse);
 		}
@@ -884,7 +884,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the number of matching commerce inventory warehouses
 	 */
 	@Override
-	public int countByactive(boolean active) {
+	public int countByActive(boolean active) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ACTIVE;
 
 		Object[] finderArgs = new Object[] { active };
@@ -935,9 +935,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the number of matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public int filterCountByactive(boolean active) {
+	public int filterCountByActive(boolean active) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByactive(active);
+			return countByActive(active);
 		}
 
 		StringBundler query = new StringBundler(2);
@@ -983,7 +983,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 			CommerceInventoryWarehouseModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryWarehouseImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBycountryTwoLettersISOCode",
+			"findByCountryTwoLettersISOCode",
 			new String[] {
 				String.class.getName(),
 				
@@ -995,7 +995,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 			CommerceInventoryWarehouseModelImpl.FINDER_CACHE_ENABLED,
 			CommerceInventoryWarehouseImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBycountryTwoLettersISOCode",
+			"findByCountryTwoLettersISOCode",
 			new String[] { String.class.getName() },
 			CommerceInventoryWarehouseModelImpl.COUNTRYTWOLETTERSISOCODE_COLUMN_BITMASK |
 			CommerceInventoryWarehouseModelImpl.NAME_COLUMN_BITMASK);
@@ -1003,7 +1003,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		new FinderPath(CommerceInventoryWarehouseModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryWarehouseModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBycountryTwoLettersISOCode",
+			"countByCountryTwoLettersISOCode",
 			new String[] { String.class.getName() });
 
 	/**
@@ -1013,9 +1013,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
-		return findBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+		return findByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1032,9 +1032,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the range of matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end) {
-		return findBycountryTwoLettersISOCode(countryTwoLettersISOCode, start,
+		return findByCountryTwoLettersISOCode(countryTwoLettersISOCode, start,
 			end, null);
 	}
 
@@ -1052,10 +1052,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the ordered range of matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		return findBycountryTwoLettersISOCode(countryTwoLettersISOCode, start,
+		return findByCountryTwoLettersISOCode(countryTwoLettersISOCode, start,
 			end, orderByComparator, true);
 	}
 
@@ -1074,7 +1074,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the ordered range of matching commerce inventory warehouses
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
 		boolean retrieveFromCache) {
@@ -1205,11 +1205,11 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse findBycountryTwoLettersISOCode_First(
+	public CommerceInventoryWarehouse findByCountryTwoLettersISOCode_First(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
-		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchBycountryTwoLettersISOCode_First(countryTwoLettersISOCode,
+		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchByCountryTwoLettersISOCode_First(countryTwoLettersISOCode,
 				orderByComparator);
 
 		if (commerceInventoryWarehouse != null) {
@@ -1236,10 +1236,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse fetchBycountryTwoLettersISOCode_First(
+	public CommerceInventoryWarehouse fetchByCountryTwoLettersISOCode_First(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		List<CommerceInventoryWarehouse> list = findBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+		List<CommerceInventoryWarehouse> list = findByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1258,11 +1258,11 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse findBycountryTwoLettersISOCode_Last(
+	public CommerceInventoryWarehouse findByCountryTwoLettersISOCode_Last(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
-		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchBycountryTwoLettersISOCode_Last(countryTwoLettersISOCode,
+		CommerceInventoryWarehouse commerceInventoryWarehouse = fetchByCountryTwoLettersISOCode_Last(countryTwoLettersISOCode,
 				orderByComparator);
 
 		if (commerceInventoryWarehouse != null) {
@@ -1289,16 +1289,16 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse fetchBycountryTwoLettersISOCode_Last(
+	public CommerceInventoryWarehouse fetchByCountryTwoLettersISOCode_Last(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		int count = countBycountryTwoLettersISOCode(countryTwoLettersISOCode);
+		int count = countByCountryTwoLettersISOCode(countryTwoLettersISOCode);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceInventoryWarehouse> list = findBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+		List<CommerceInventoryWarehouse> list = findByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1318,7 +1318,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse[] findBycountryTwoLettersISOCode_PrevAndNext(
+	public CommerceInventoryWarehouse[] findByCountryTwoLettersISOCode_PrevAndNext(
 		long commerceInventoryWarehouseId, String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
@@ -1331,13 +1331,13 @@ public class CommerceInventoryWarehousePersistenceImpl
 
 			CommerceInventoryWarehouse[] array = new CommerceInventoryWarehouseImpl[3];
 
-			array[0] = getBycountryTwoLettersISOCode_PrevAndNext(session,
+			array[0] = getByCountryTwoLettersISOCode_PrevAndNext(session,
 					commerceInventoryWarehouse, countryTwoLettersISOCode,
 					orderByComparator, true);
 
 			array[1] = commerceInventoryWarehouse;
 
-			array[2] = getBycountryTwoLettersISOCode_PrevAndNext(session,
+			array[2] = getByCountryTwoLettersISOCode_PrevAndNext(session,
 					commerceInventoryWarehouse, countryTwoLettersISOCode,
 					orderByComparator, false);
 
@@ -1351,7 +1351,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 	}
 
-	protected CommerceInventoryWarehouse getBycountryTwoLettersISOCode_PrevAndNext(
+	protected CommerceInventoryWarehouse getByCountryTwoLettersISOCode_PrevAndNext(
 		Session session, CommerceInventoryWarehouse commerceInventoryWarehouse,
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
@@ -1480,9 +1480,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
-		return filterFindBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+		return filterFindByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1499,9 +1499,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the range of matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end) {
-		return filterFindBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+		return filterFindByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			start, end, null);
 	}
 
@@ -1519,11 +1519,11 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the ordered range of matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+			return findByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 				start, end, orderByComparator);
 		}
 
@@ -1628,12 +1628,12 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	 */
 	@Override
-	public CommerceInventoryWarehouse[] filterFindBycountryTwoLettersISOCode_PrevAndNext(
+	public CommerceInventoryWarehouse[] filterFindByCountryTwoLettersISOCode_PrevAndNext(
 		long commerceInventoryWarehouseId, String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws NoSuchInventoryWarehouseException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findBycountryTwoLettersISOCode_PrevAndNext(commerceInventoryWarehouseId,
+			return findByCountryTwoLettersISOCode_PrevAndNext(commerceInventoryWarehouseId,
 				countryTwoLettersISOCode, orderByComparator);
 		}
 
@@ -1646,13 +1646,13 @@ public class CommerceInventoryWarehousePersistenceImpl
 
 			CommerceInventoryWarehouse[] array = new CommerceInventoryWarehouseImpl[3];
 
-			array[0] = filterGetBycountryTwoLettersISOCode_PrevAndNext(session,
+			array[0] = filterGetByCountryTwoLettersISOCode_PrevAndNext(session,
 					commerceInventoryWarehouse, countryTwoLettersISOCode,
 					orderByComparator, true);
 
 			array[1] = commerceInventoryWarehouse;
 
-			array[2] = filterGetBycountryTwoLettersISOCode_PrevAndNext(session,
+			array[2] = filterGetByCountryTwoLettersISOCode_PrevAndNext(session,
 					commerceInventoryWarehouse, countryTwoLettersISOCode,
 					orderByComparator, false);
 
@@ -1666,7 +1666,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 	}
 
-	protected CommerceInventoryWarehouse filterGetBycountryTwoLettersISOCode_PrevAndNext(
+	protected CommerceInventoryWarehouse filterGetByCountryTwoLettersISOCode_PrevAndNext(
 		Session session, CommerceInventoryWarehouse commerceInventoryWarehouse,
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
@@ -1831,9 +1831,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @param countryTwoLettersISOCode the country two letters iso code
 	 */
 	@Override
-	public void removeBycountryTwoLettersISOCode(
+	public void removeByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse : findBycountryTwoLettersISOCode(
+		for (CommerceInventoryWarehouse commerceInventoryWarehouse : findByCountryTwoLettersISOCode(
 				countryTwoLettersISOCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null)) {
 			remove(commerceInventoryWarehouse);
@@ -1847,7 +1847,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the number of matching commerce inventory warehouses
 	 */
 	@Override
-	public int countBycountryTwoLettersISOCode(String countryTwoLettersISOCode) {
+	public int countByCountryTwoLettersISOCode(String countryTwoLettersISOCode) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COUNTRYTWOLETTERSISOCODE;
 
 		Object[] finderArgs = new Object[] { countryTwoLettersISOCode };
@@ -1912,10 +1912,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 * @return the number of matching commerce inventory warehouses that the user has permission to view
 	 */
 	@Override
-	public int filterCountBycountryTwoLettersISOCode(
+	public int filterCountByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countBycountryTwoLettersISOCode(countryTwoLettersISOCode);
+			return countByCountryTwoLettersISOCode(countryTwoLettersISOCode);
 		}
 
 		StringBundler query = new StringBundler(2);

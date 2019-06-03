@@ -14,8 +14,7 @@
 
 package com.liferay.commerce.inventory.service.impl;
 
-import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemQuantityBelowZeroException;
-import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException;
+import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseItemLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,146 +29,110 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	extends CommerceInventoryWarehouseItemLocalServiceBaseImpl {
 
 	@Override
-	public CommerceInventoryWarehouseItem addCommerceWarehouseItem(
-			long commerceWarehouseId, String sku, int quantity, long userId)
+	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+			long userId, long commerceInventoryWarehouseId, String sku,
+			int quantity)
 		throws PortalException {
 
-		try {
-			CommerceInventoryWarehouseItem existingItem =
-				commerceInventoryWarehouseItemPersistence.findByC_S(
-					commerceWarehouseId, sku);
+		User user = userLocalService.getUser(userId);
 
-			existingItem.setQuantity(existingItem.getQuantity() + quantity);
+		long commerceInventoryWarehouseItemId = counterLocalService.increment();
 
-			return commerceInventoryWarehouseItemPersistence.update(
-				existingItem);
-		}
-		catch (NoSuchInventoryWarehouseItemException nsiwie) {
-			User user = userLocalService.getUser(userId);
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			commerceInventoryWarehouseItemPersistence.create(
+				commerceInventoryWarehouseItemId);
 
-			long commerceWarehouseItemId = counterLocalService.increment();
-
-			CommerceInventoryWarehouseItem commerceWarehouseItem =
-				commerceInventoryWarehouseItemPersistence.create(
-					commerceWarehouseItemId);
-
-			commerceWarehouseItem.setCompanyId(user.getCompanyId());
-			commerceWarehouseItem.setUserId(user.getUserId());
-			commerceWarehouseItem.setUserName(user.getFullName());
-			commerceWarehouseItem.setCommerceWarehouseId(commerceWarehouseId);
-			commerceWarehouseItem.setSku(sku);
-			commerceWarehouseItem.setQuantity(quantity);
-
-			commerceInventoryWarehouseItemPersistence.update(
-				commerceWarehouseItem);
-
-			return commerceWarehouseItem;
-		}
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem addStockQuantity(
-			long commerceWarehouseItemId, int quantity)
-		throws NoSuchInventoryWarehouseItemException {
-
-		CommerceInventoryWarehouseItem commerceWarehouseItem =
-			commerceInventoryWarehouseItemPersistence.findByPrimaryKey(
-				commerceWarehouseItemId);
-
-		commerceWarehouseItem.setQuantity(
-			commerceWarehouseItem.getQuantity() + quantity);
+		commerceInventoryWarehouseItem.setCompanyId(user.getCompanyId());
+		commerceInventoryWarehouseItem.setUserId(user.getUserId());
+		commerceInventoryWarehouseItem.setUserName(user.getFullName());
+		commerceInventoryWarehouseItem.setCommerceInventoryWarehouseId(
+			commerceInventoryWarehouseId);
+		commerceInventoryWarehouseItem.setSku(sku);
+		commerceInventoryWarehouseItem.setQuantity(quantity);
 
 		return commerceInventoryWarehouseItemPersistence.update(
-			commerceWarehouseItem);
+			commerceInventoryWarehouseItem);
 	}
 
 	@Override
-	public void deleteCommerceWarehouseItems(long commerceWarehouseId) {
-		commerceInventoryWarehouseItemPersistence.removeByCommerceWarehouseId(
-			commerceWarehouseId);
+	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseItemId, int quantity)
+		throws PortalException {
+
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			commerceInventoryWarehouseItemPersistence.findByPrimaryKey(
+				commerceInventoryWarehouseItemId);
+
+		commerceInventoryWarehouseItem.setQuantity(quantity);
+
+		return commerceInventoryWarehouseItemPersistence.update(
+			commerceInventoryWarehouseItem);
 	}
 
 	@Override
-	public CommerceInventoryWarehouseItem fetchCommerceWarehouseItem(
-		long commerceWarehouseId, String sku) {
+	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+			long userId, long commerceInventoryWarehouseId, String sku,
+			int quantity)
+		throws PortalException {
+
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			commerceInventoryWarehouseItemPersistence.fetchByC_S(
+				commerceInventoryWarehouseId, sku);
+
+		if(commerceInventoryWarehouseItem == null){
+			return commerceInventoryWarehouseItemLocalService.
+				addCommerceInventoryWarehouseItem(
+					userId, commerceInventoryWarehouseId, sku, quantity);
+		}
+
+		return commerceInventoryWarehouseItemLocalService.
+			updateCommerceInventoryWarehouseItem(
+				commerceInventoryWarehouseItem.
+					getCommerceInventoryWarehouseItemId(), quantity);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem
+			fetchCommerceInventoryWarehouseItemByC_S(
+				long commerceInventoryWarehouseId, String sku)
+		throws PortalException {
 
 		return commerceInventoryWarehouseItemPersistence.fetchByC_S(
-			commerceWarehouseId, sku);
+			commerceInventoryWarehouseId, sku);
 	}
 
 	@Override
-	public CommerceInventoryWarehouseItem getCommerceWarehouseItem(
-			long commerceWarehouseId, String sku)
-		throws NoSuchInventoryWarehouseItemException {
+	public void deleteCommerceInventoryWarehouseItemsByInventoryWarehouseId(
+		long commerceInventoryWarehouseId){
 
-		return commerceInventoryWarehouseItemPersistence.findByC_S(
-			commerceWarehouseId, sku);
+		commerceInventoryWarehouseItemPersistence.
+			removeByCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
-	@Override
-	public List<CommerceInventoryWarehouseItem> getCommerceWarehouseItems(
-		String sku) {
-
-		return commerceInventoryWarehouseItemPersistence.findBysku(sku);
-	}
 
 	@Override
 	public List<CommerceInventoryWarehouseItem>
-		getCommerceWarehouseItemsByCommerceWarehouseId(
-			long commerceWarehouseId) {
+		getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(
+			long commerceInventoryWarehouseId, int start, int end) {
 
 		return commerceInventoryWarehouseItemPersistence.
-			findByCommerceWarehouseId(commerceWarehouseId);
+			findByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId, start, end);
 	}
 
 	@Override
-	public int getCommerceWarehouseItemsCount(String sku) {
-		return commerceInventoryWarehouseItemPersistence.countBysku(sku);
-	}
-
-	@Override
-	public int getStockQuantityByGroupIdAndSku(
+	public int getStockQuantityByG_S(
 		long companyId, long groupId, String sku) {
 
-		return commerceInventoryWarehouseItemFinder.
-			findStockQuantityByGroupIdAndSku(companyId, groupId, sku);
+		return commerceInventoryWarehouseItemFinder.sumStockQuantityByG_S(
+			companyId, groupId, sku);
 	}
 
 	@Override
-	public CommerceInventoryWarehouseItem removeStockQuantity(
-			long commerceWarehouseItemId, int quantity)
-		throws PortalException {
+	public int getStockQuantityBySku(long companyId, String sku) {
 
-		CommerceInventoryWarehouseItem commerceWarehouseItem =
-			commerceInventoryWarehouseItemPersistence.findByPrimaryKey(
-				commerceWarehouseItemId);
-
-		int newQuantity = commerceWarehouseItem.getQuantity() - quantity;
-
-		if (newQuantity < 0) {
-			throw new CommerceInventoryWarehouseItemQuantityBelowZeroException();
-		}
-
-		commerceWarehouseItem.setQuantity(newQuantity);
-
-		return commerceInventoryWarehouseItemPersistence.update(
-			commerceWarehouseItem);
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem updateCommerceWarehouseItem(
-			long commerceWarehouseItemId, int quantity)
-		throws PortalException {
-
-		CommerceInventoryWarehouseItem commerceWarehouseItem =
-			commerceInventoryWarehouseItemPersistence.findByPrimaryKey(
-				commerceWarehouseItemId);
-
-		commerceWarehouseItem.setQuantity(quantity);
-
-		commerceInventoryWarehouseItemPersistence.update(commerceWarehouseItem);
-
-		return commerceWarehouseItem;
+		return commerceInventoryWarehouseItemFinder.sumStockQuantityBySKu(
+			companyId, sku);
 	}
 
 }

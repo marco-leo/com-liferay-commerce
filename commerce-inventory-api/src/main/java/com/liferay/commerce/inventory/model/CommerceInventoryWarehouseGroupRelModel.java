@@ -194,18 +194,19 @@ public interface CommerceInventoryWarehouseGroupRelModel extends BaseModel<Comme
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the commerce warehouse ID of this commerce inventory warehouse group rel.
+	 * Returns the commerce inventory warehouse ID of this commerce inventory warehouse group rel.
 	 *
-	 * @return the commerce warehouse ID of this commerce inventory warehouse group rel
+	 * @return the commerce inventory warehouse ID of this commerce inventory warehouse group rel
 	 */
-	public long getCommerceWarehouseId();
+	public long getCommerceInventoryWarehouseId();
 
 	/**
-	 * Sets the commerce warehouse ID of this commerce inventory warehouse group rel.
+	 * Sets the commerce inventory warehouse ID of this commerce inventory warehouse group rel.
 	 *
-	 * @param commerceWarehouseId the commerce warehouse ID of this commerce inventory warehouse group rel
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID of this commerce inventory warehouse group rel
 	 */
-	public void setCommerceWarehouseId(long commerceWarehouseId);
+	public void setCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId);
 
 	/**
 	 * Returns the primary of this commerce inventory warehouse group rel.

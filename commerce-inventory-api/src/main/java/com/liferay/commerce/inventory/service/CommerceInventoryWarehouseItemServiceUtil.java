@@ -42,6 +42,21 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceInventoryWarehouseItem(userId,
+			commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	public static java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem> getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(commerceInventoryWarehouseId,
+			start, end);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -50,6 +65,22 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
+		long commerceInventoryWarehouseItemId, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId,
+			quantity);
+	}
+
+	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .upsertCommerceInventoryWarehouseItem(userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	public static CommerceInventoryWarehouseItemService getService() {

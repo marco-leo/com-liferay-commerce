@@ -47,19 +47,11 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, String sku, int quantity, long userId)
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceInventoryWarehouseItemLocalService.addCommerceWarehouseItem(commerceWarehouseId,
-			sku, quantity, userId);
-	}
-
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem addStockQuantity(
-		long commerceWarehouseItemId, int quantity)
-		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException {
-		return _commerceInventoryWarehouseItemLocalService.addStockQuantity(commerceWarehouseItemId,
-			quantity);
+		return _commerceInventoryWarehouseItemLocalService.addCommerceInventoryWarehouseItem(userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	/**
@@ -101,8 +93,9 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceWarehouseItems(long commerceWarehouseId) {
-		_commerceInventoryWarehouseItemLocalService.deleteCommerceWarehouseItems(commerceWarehouseId);
+	public void deleteCommerceInventoryWarehouseItemsByInventoryWarehouseId(
+		long commerceInventoryWarehouseId) {
+		_commerceInventoryWarehouseItemLocalService.deleteCommerceInventoryWarehouseItemsByInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
 	/**
@@ -208,9 +201,10 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem fetchCommerceWarehouseItem(
-		long commerceWarehouseId, String sku) {
-		return _commerceInventoryWarehouseItemLocalService.fetchCommerceWarehouseItem(commerceWarehouseId,
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem fetchCommerceInventoryWarehouseItemByC_S(
+		long commerceInventoryWarehouseId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceInventoryWarehouseItemLocalService.fetchCommerceInventoryWarehouseItemByC_S(commerceInventoryWarehouseId,
 			sku);
 	}
 
@@ -262,28 +256,10 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem getCommerceWarehouseItem(
-		long commerceWarehouseId, String sku)
-		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException {
-		return _commerceInventoryWarehouseItemLocalService.getCommerceWarehouseItem(commerceWarehouseId,
-			sku);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem> getCommerceWarehouseItems(
-		String sku) {
-		return _commerceInventoryWarehouseItemLocalService.getCommerceWarehouseItems(sku);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem> getCommerceWarehouseItemsByCommerceWarehouseId(
-		long commerceWarehouseId) {
-		return _commerceInventoryWarehouseItemLocalService.getCommerceWarehouseItemsByCommerceWarehouseId(commerceWarehouseId);
-	}
-
-	@Override
-	public int getCommerceWarehouseItemsCount(String sku) {
-		return _commerceInventoryWarehouseItemLocalService.getCommerceWarehouseItemsCount(sku);
+	public java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem> getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId, int start, int end) {
+		return _commerceInventoryWarehouseItemLocalService.getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(commerceInventoryWarehouseId,
+			start, end);
 	}
 
 	@Override
@@ -309,18 +285,15 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public int getStockQuantityByGroupIdAndSku(long companyId, long groupId,
-		String sku) {
-		return _commerceInventoryWarehouseItemLocalService.getStockQuantityByGroupIdAndSku(companyId,
+	public int getStockQuantityByG_S(long companyId, long groupId, String sku) {
+		return _commerceInventoryWarehouseItemLocalService.getStockQuantityByG_S(companyId,
 			groupId, sku);
 	}
 
 	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem removeStockQuantity(
-		long commerceWarehouseItemId, int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceInventoryWarehouseItemLocalService.removeStockQuantity(commerceWarehouseItemId,
-			quantity);
+	public int getStockQuantityBySku(long companyId, String sku) {
+		return _commerceInventoryWarehouseItemLocalService.getStockQuantityBySku(companyId,
+			sku);
 	}
 
 	/**
@@ -336,11 +309,19 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem updateCommerceWarehouseItem(
-		long commerceWarehouseItemId, int quantity)
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
+		long commerceInventoryWarehouseItemId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceInventoryWarehouseItemLocalService.updateCommerceWarehouseItem(commerceWarehouseItemId,
+		return _commerceInventoryWarehouseItemLocalService.updateCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId,
 			quantity);
+	}
+
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceInventoryWarehouseItemLocalService.upsertCommerceInventoryWarehouseItem(userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	@Override

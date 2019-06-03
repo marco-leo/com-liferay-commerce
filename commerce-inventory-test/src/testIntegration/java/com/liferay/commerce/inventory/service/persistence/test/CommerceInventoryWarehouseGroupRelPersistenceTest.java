@@ -139,7 +139,7 @@ public class CommerceInventoryWarehouseGroupRelPersistenceTest {
 
 		newCommerceInventoryWarehouseGroupRel.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceInventoryWarehouseGroupRel.setCommerceWarehouseId(RandomTestUtil.nextLong());
+		newCommerceInventoryWarehouseGroupRel.setCommerceInventoryWarehouseId(RandomTestUtil.nextLong());
 
 		newCommerceInventoryWarehouseGroupRel.setPrimary(RandomTestUtil.randomBoolean());
 
@@ -167,17 +167,17 @@ public class CommerceInventoryWarehouseGroupRelPersistenceTest {
 				existingCommerceInventoryWarehouseGroupRel.getModifiedDate()),
 			Time.getShortTimestamp(
 				newCommerceInventoryWarehouseGroupRel.getModifiedDate()));
-		Assert.assertEquals(existingCommerceInventoryWarehouseGroupRel.getCommerceWarehouseId(),
-			newCommerceInventoryWarehouseGroupRel.getCommerceWarehouseId());
+		Assert.assertEquals(existingCommerceInventoryWarehouseGroupRel.getCommerceInventoryWarehouseId(),
+			newCommerceInventoryWarehouseGroupRel.getCommerceInventoryWarehouseId());
 		Assert.assertEquals(existingCommerceInventoryWarehouseGroupRel.isPrimary(),
 			newCommerceInventoryWarehouseGroupRel.isPrimary());
 	}
 
 	@Test
-	public void testCountBygroupId() throws Exception {
-		_persistence.countBygroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-		_persistence.countBygroupId(0L);
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -233,8 +233,8 @@ public class CommerceInventoryWarehouseGroupRelPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CIWarehouseGroupRel",
 			"commerceInventoryWarehouseGroupRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "commerceWarehouseId", true, "primary",
-			true);
+			true, "modifiedDate", true, "commerceInventoryWarehouseId", true,
+			"primary", true);
 	}
 
 	@Test
@@ -474,10 +474,10 @@ public class CommerceInventoryWarehouseGroupRelPersistenceTest {
 				existingCommerceInventoryWarehouseGroupRel,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
-				existingCommerceInventoryWarehouseGroupRel.getCommerceWarehouseId()),
+				existingCommerceInventoryWarehouseGroupRel.getCommerceInventoryWarehouseId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingCommerceInventoryWarehouseGroupRel,
-				"getOriginalCommerceWarehouseId", new Class<?>[0]));
+				"getOriginalCommerceInventoryWarehouseId", new Class<?>[0]));
 
 		Assert.assertEquals(Long.valueOf(
 				existingCommerceInventoryWarehouseGroupRel.getGroupId()),
@@ -485,10 +485,10 @@ public class CommerceInventoryWarehouseGroupRelPersistenceTest {
 				existingCommerceInventoryWarehouseGroupRel,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
-				existingCommerceInventoryWarehouseGroupRel.getCommerceWarehouseId()),
+				existingCommerceInventoryWarehouseGroupRel.getCommerceInventoryWarehouseId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingCommerceInventoryWarehouseGroupRel,
-				"getOriginalCommerceWarehouseId", new Class<?>[0]));
+				"getOriginalCommerceInventoryWarehouseId", new Class<?>[0]));
 		Assert.assertEquals(Boolean.valueOf(
 				existingCommerceInventoryWarehouseGroupRel.getPrimary()),
 			ReflectionTestUtil.<Boolean>invoke(
@@ -514,7 +514,7 @@ public class CommerceInventoryWarehouseGroupRelPersistenceTest {
 
 		commerceInventoryWarehouseGroupRel.setModifiedDate(RandomTestUtil.nextDate());
 
-		commerceInventoryWarehouseGroupRel.setCommerceWarehouseId(RandomTestUtil.nextLong());
+		commerceInventoryWarehouseGroupRel.setCommerceInventoryWarehouseId(RandomTestUtil.nextLong());
 
 		commerceInventoryWarehouseGroupRel.setPrimary(RandomTestUtil.randomBoolean());
 

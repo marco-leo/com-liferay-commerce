@@ -68,7 +68,8 @@ public class CommerceInventoryWarehouseGroupRelWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
+		attributes.put("commerceInventoryWarehouseId",
+			getCommerceInventoryWarehouseId());
 		attributes.put("primary", isPrimary());
 
 		return attributes;
@@ -119,10 +120,11 @@ public class CommerceInventoryWarehouseGroupRelWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceWarehouseId = (Long)attributes.get("commerceWarehouseId");
+		Long commerceInventoryWarehouseId = (Long)attributes.get(
+				"commerceInventoryWarehouseId");
 
-		if (commerceWarehouseId != null) {
-			setCommerceWarehouseId(commerceWarehouseId);
+		if (commerceInventoryWarehouseId != null) {
+			setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 		}
 
 		Boolean primary = (Boolean)attributes.get("primary");
@@ -154,13 +156,13 @@ public class CommerceInventoryWarehouseGroupRelWrapper
 	}
 
 	/**
-	* Returns the commerce warehouse ID of this commerce inventory warehouse group rel.
+	* Returns the commerce inventory warehouse ID of this commerce inventory warehouse group rel.
 	*
-	* @return the commerce warehouse ID of this commerce inventory warehouse group rel
+	* @return the commerce inventory warehouse ID of this commerce inventory warehouse group rel
 	*/
 	@Override
-	public long getCommerceWarehouseId() {
-		return _commerceInventoryWarehouseGroupRel.getCommerceWarehouseId();
+	public long getCommerceInventoryWarehouseId() {
+		return _commerceInventoryWarehouseGroupRel.getCommerceInventoryWarehouseId();
 	}
 
 	/**
@@ -315,13 +317,14 @@ public class CommerceInventoryWarehouseGroupRelWrapper
 	}
 
 	/**
-	* Sets the commerce warehouse ID of this commerce inventory warehouse group rel.
+	* Sets the commerce inventory warehouse ID of this commerce inventory warehouse group rel.
 	*
-	* @param commerceWarehouseId the commerce warehouse ID of this commerce inventory warehouse group rel
+	* @param commerceInventoryWarehouseId the commerce inventory warehouse ID of this commerce inventory warehouse group rel
 	*/
 	@Override
-	public void setCommerceWarehouseId(long commerceWarehouseId) {
-		_commerceInventoryWarehouseGroupRel.setCommerceWarehouseId(commerceWarehouseId);
+	public void setCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId) {
+		_commerceInventoryWarehouseGroupRel.setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
 	/**

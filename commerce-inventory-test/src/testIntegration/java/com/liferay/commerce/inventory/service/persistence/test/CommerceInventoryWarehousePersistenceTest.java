@@ -215,19 +215,19 @@ public class CommerceInventoryWarehousePersistenceTest {
 	}
 
 	@Test
-	public void testCountByactive() throws Exception {
-		_persistence.countByactive(RandomTestUtil.randomBoolean());
+	public void testCountByActive() throws Exception {
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
 
-		_persistence.countByactive(RandomTestUtil.randomBoolean());
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
 	}
 
 	@Test
-	public void testCountBycountryTwoLettersISOCode() throws Exception {
-		_persistence.countBycountryTwoLettersISOCode("");
+	public void testCountByCountryTwoLettersISOCode() throws Exception {
+		_persistence.countByCountryTwoLettersISOCode("");
 
-		_persistence.countBycountryTwoLettersISOCode("null");
+		_persistence.countByCountryTwoLettersISOCode("null");
 
-		_persistence.countBycountryTwoLettersISOCode((String)null);
+		_persistence.countByCountryTwoLettersISOCode((String)null);
 	}
 
 	@Test

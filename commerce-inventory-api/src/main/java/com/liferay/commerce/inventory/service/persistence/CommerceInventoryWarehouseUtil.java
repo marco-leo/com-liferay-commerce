@@ -122,8 +122,8 @@ public class CommerceInventoryWarehouseUtil {
 	* @param active the active
 	* @return the matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findByactive(boolean active) {
-		return getPersistence().findByactive(active);
+	public static List<CommerceInventoryWarehouse> findByActive(boolean active) {
+		return getPersistence().findByActive(active);
 	}
 
 	/**
@@ -138,9 +138,9 @@ public class CommerceInventoryWarehouseUtil {
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findByactive(
+	public static List<CommerceInventoryWarehouse> findByActive(
 		boolean active, int start, int end) {
-		return getPersistence().findByactive(active, start, end);
+		return getPersistence().findByActive(active, start, end);
 	}
 
 	/**
@@ -156,11 +156,11 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findByactive(
+	public static List<CommerceInventoryWarehouse> findByActive(
 		boolean active, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		return getPersistence()
-				   .findByactive(active, start, end, orderByComparator);
+				   .findByActive(active, start, end, orderByComparator);
 	}
 
 	/**
@@ -177,12 +177,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findByactive(
+	public static List<CommerceInventoryWarehouse> findByActive(
 		boolean active, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByactive(active, start, end, orderByComparator,
+				   .findByActive(active, start, end, orderByComparator,
 			retrieveFromCache);
 	}
 
@@ -194,11 +194,11 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the first matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse findByactive_First(
+	public static CommerceInventoryWarehouse findByActive_First(
 		boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
-		return getPersistence().findByactive_First(active, orderByComparator);
+		return getPersistence().findByActive_First(active, orderByComparator);
 	}
 
 	/**
@@ -208,10 +208,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse fetchByactive_First(
+	public static CommerceInventoryWarehouse fetchByActive_First(
 		boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		return getPersistence().fetchByactive_First(active, orderByComparator);
+		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
 	/**
@@ -222,10 +222,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the last matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse findByactive_Last(boolean active,
+	public static CommerceInventoryWarehouse findByActive_Last(boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
-		return getPersistence().findByactive_Last(active, orderByComparator);
+		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
 
 	/**
@@ -235,10 +235,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse fetchByactive_Last(
+	public static CommerceInventoryWarehouse fetchByActive_Last(
 		boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
-		return getPersistence().fetchByactive_Last(active, orderByComparator);
+		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
 	/**
@@ -250,12 +250,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public static CommerceInventoryWarehouse[] findByactive_PrevAndNext(
+	public static CommerceInventoryWarehouse[] findByActive_PrevAndNext(
 		long commerceInventoryWarehouseId, boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
 		return getPersistence()
-				   .findByactive_PrevAndNext(commerceInventoryWarehouseId,
+				   .findByActive_PrevAndNext(commerceInventoryWarehouseId,
 			active, orderByComparator);
 	}
 
@@ -265,9 +265,9 @@ public class CommerceInventoryWarehouseUtil {
 	* @param active the active
 	* @return the matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static List<CommerceInventoryWarehouse> filterFindByactive(
+	public static List<CommerceInventoryWarehouse> filterFindByActive(
 		boolean active) {
-		return getPersistence().filterFindByactive(active);
+		return getPersistence().filterFindByActive(active);
 	}
 
 	/**
@@ -282,9 +282,9 @@ public class CommerceInventoryWarehouseUtil {
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static List<CommerceInventoryWarehouse> filterFindByactive(
+	public static List<CommerceInventoryWarehouse> filterFindByActive(
 		boolean active, int start, int end) {
-		return getPersistence().filterFindByactive(active, start, end);
+		return getPersistence().filterFindByActive(active, start, end);
 	}
 
 	/**
@@ -300,11 +300,11 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static List<CommerceInventoryWarehouse> filterFindByactive(
+	public static List<CommerceInventoryWarehouse> filterFindByActive(
 		boolean active, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		return getPersistence()
-				   .filterFindByactive(active, start, end, orderByComparator);
+				   .filterFindByActive(active, start, end, orderByComparator);
 	}
 
 	/**
@@ -316,12 +316,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public static CommerceInventoryWarehouse[] filterFindByactive_PrevAndNext(
+	public static CommerceInventoryWarehouse[] filterFindByActive_PrevAndNext(
 		long commerceInventoryWarehouseId, boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
 		return getPersistence()
-				   .filterFindByactive_PrevAndNext(commerceInventoryWarehouseId,
+				   .filterFindByActive_PrevAndNext(commerceInventoryWarehouseId,
 			active, orderByComparator);
 	}
 
@@ -330,8 +330,8 @@ public class CommerceInventoryWarehouseUtil {
 	*
 	* @param active the active
 	*/
-	public static void removeByactive(boolean active) {
-		getPersistence().removeByactive(active);
+	public static void removeByActive(boolean active) {
+		getPersistence().removeByActive(active);
 	}
 
 	/**
@@ -340,8 +340,8 @@ public class CommerceInventoryWarehouseUtil {
 	* @param active the active
 	* @return the number of matching commerce inventory warehouses
 	*/
-	public static int countByactive(boolean active) {
-		return getPersistence().countByactive(active);
+	public static int countByActive(boolean active) {
+		return getPersistence().countByActive(active);
 	}
 
 	/**
@@ -350,8 +350,8 @@ public class CommerceInventoryWarehouseUtil {
 	* @param active the active
 	* @return the number of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static int filterCountByactive(boolean active) {
-		return getPersistence().filterCountByactive(active);
+	public static int filterCountByActive(boolean active) {
+		return getPersistence().filterCountByActive(active);
 	}
 
 	/**
@@ -360,10 +360,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public static List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
 		return getPersistence()
-				   .findBycountryTwoLettersISOCode(countryTwoLettersISOCode);
+				   .findByCountryTwoLettersISOCode(countryTwoLettersISOCode);
 	}
 
 	/**
@@ -378,10 +378,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public static List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end) {
 		return getPersistence()
-				   .findBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+				   .findByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			start, end);
 	}
 
@@ -398,11 +398,11 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public static List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		return getPersistence()
-				   .findBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+				   .findByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			start, end, orderByComparator);
 	}
 
@@ -420,12 +420,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce inventory warehouses
 	*/
-	public static List<CommerceInventoryWarehouse> findBycountryTwoLettersISOCode(
+	public static List<CommerceInventoryWarehouse> findByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+				   .findByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			start, end, orderByComparator, retrieveFromCache);
 	}
 
@@ -437,12 +437,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the first matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse findBycountryTwoLettersISOCode_First(
+	public static CommerceInventoryWarehouse findByCountryTwoLettersISOCode_First(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
 		return getPersistence()
-				   .findBycountryTwoLettersISOCode_First(countryTwoLettersISOCode,
+				   .findByCountryTwoLettersISOCode_First(countryTwoLettersISOCode,
 			orderByComparator);
 	}
 
@@ -453,11 +453,11 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse fetchBycountryTwoLettersISOCode_First(
+	public static CommerceInventoryWarehouse fetchByCountryTwoLettersISOCode_First(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		return getPersistence()
-				   .fetchBycountryTwoLettersISOCode_First(countryTwoLettersISOCode,
+				   .fetchByCountryTwoLettersISOCode_First(countryTwoLettersISOCode,
 			orderByComparator);
 	}
 
@@ -469,12 +469,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the last matching commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse findBycountryTwoLettersISOCode_Last(
+	public static CommerceInventoryWarehouse findByCountryTwoLettersISOCode_Last(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
 		return getPersistence()
-				   .findBycountryTwoLettersISOCode_Last(countryTwoLettersISOCode,
+				   .findByCountryTwoLettersISOCode_Last(countryTwoLettersISOCode,
 			orderByComparator);
 	}
 
@@ -485,11 +485,11 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
 	*/
-	public static CommerceInventoryWarehouse fetchBycountryTwoLettersISOCode_Last(
+	public static CommerceInventoryWarehouse fetchByCountryTwoLettersISOCode_Last(
 		String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		return getPersistence()
-				   .fetchBycountryTwoLettersISOCode_Last(countryTwoLettersISOCode,
+				   .fetchByCountryTwoLettersISOCode_Last(countryTwoLettersISOCode,
 			orderByComparator);
 	}
 
@@ -502,12 +502,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public static CommerceInventoryWarehouse[] findBycountryTwoLettersISOCode_PrevAndNext(
+	public static CommerceInventoryWarehouse[] findByCountryTwoLettersISOCode_PrevAndNext(
 		long commerceInventoryWarehouseId, String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
 		return getPersistence()
-				   .findBycountryTwoLettersISOCode_PrevAndNext(commerceInventoryWarehouseId,
+				   .findByCountryTwoLettersISOCode_PrevAndNext(commerceInventoryWarehouseId,
 			countryTwoLettersISOCode, orderByComparator);
 	}
 
@@ -517,10 +517,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public static List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
 		return getPersistence()
-				   .filterFindBycountryTwoLettersISOCode(countryTwoLettersISOCode);
+				   .filterFindByCountryTwoLettersISOCode(countryTwoLettersISOCode);
 	}
 
 	/**
@@ -535,10 +535,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param end the upper bound of the range of commerce inventory warehouses (not inclusive)
 	* @return the range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public static List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end) {
 		return getPersistence()
-				   .filterFindBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+				   .filterFindByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			start, end);
 	}
 
@@ -555,11 +555,11 @@ public class CommerceInventoryWarehouseUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static List<CommerceInventoryWarehouse> filterFindBycountryTwoLettersISOCode(
+	public static List<CommerceInventoryWarehouse> filterFindByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode, int start, int end,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 		return getPersistence()
-				   .filterFindBycountryTwoLettersISOCode(countryTwoLettersISOCode,
+				   .filterFindByCountryTwoLettersISOCode(countryTwoLettersISOCode,
 			start, end, orderByComparator);
 	}
 
@@ -572,12 +572,12 @@ public class CommerceInventoryWarehouseUtil {
 	* @return the previous, current, and next commerce inventory warehouse
 	* @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
 	*/
-	public static CommerceInventoryWarehouse[] filterFindBycountryTwoLettersISOCode_PrevAndNext(
+	public static CommerceInventoryWarehouse[] filterFindByCountryTwoLettersISOCode_PrevAndNext(
 		long commerceInventoryWarehouseId, String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
 		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException {
 		return getPersistence()
-				   .filterFindBycountryTwoLettersISOCode_PrevAndNext(commerceInventoryWarehouseId,
+				   .filterFindByCountryTwoLettersISOCode_PrevAndNext(commerceInventoryWarehouseId,
 			countryTwoLettersISOCode, orderByComparator);
 	}
 
@@ -586,10 +586,10 @@ public class CommerceInventoryWarehouseUtil {
 	*
 	* @param countryTwoLettersISOCode the country two letters iso code
 	*/
-	public static void removeBycountryTwoLettersISOCode(
+	public static void removeByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
 		getPersistence()
-			.removeBycountryTwoLettersISOCode(countryTwoLettersISOCode);
+			.removeByCountryTwoLettersISOCode(countryTwoLettersISOCode);
 	}
 
 	/**
@@ -598,10 +598,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the number of matching commerce inventory warehouses
 	*/
-	public static int countBycountryTwoLettersISOCode(
+	public static int countByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
 		return getPersistence()
-				   .countBycountryTwoLettersISOCode(countryTwoLettersISOCode);
+				   .countByCountryTwoLettersISOCode(countryTwoLettersISOCode);
 	}
 
 	/**
@@ -610,10 +610,10 @@ public class CommerceInventoryWarehouseUtil {
 	* @param countryTwoLettersISOCode the country two letters iso code
 	* @return the number of matching commerce inventory warehouses that the user has permission to view
 	*/
-	public static int filterCountBycountryTwoLettersISOCode(
+	public static int filterCountByCountryTwoLettersISOCode(
 		String countryTwoLettersISOCode) {
 		return getPersistence()
-				   .filterCountBycountryTwoLettersISOCode(countryTwoLettersISOCode);
+				   .filterCountByCountryTwoLettersISOCode(countryTwoLettersISOCode);
 	}
 
 	/**

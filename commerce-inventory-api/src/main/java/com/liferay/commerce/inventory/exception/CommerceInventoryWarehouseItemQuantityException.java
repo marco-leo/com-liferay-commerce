@@ -12,16 +12,38 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.service.persistence;
+package com.liferay.commerce.inventory.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Luca Pellizzon
- * @generated
  */
 @ProviderType
-public interface CommerceInventoryAuditFinder {
-	public java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryAudit> findOldInventoryAudit(
-		java.util.Date olderThan);
+public class CommerceInventoryWarehouseItemQuantityException
+	extends PortalException {
+
+	public CommerceInventoryWarehouseItemQuantityException() {
+	}
+
+	public CommerceInventoryWarehouseItemQuantityException(
+		String msg) {
+
+		super(msg);
+	}
+
+	public CommerceInventoryWarehouseItemQuantityException(
+		String msg, Throwable cause) {
+
+		super(msg, cause);
+	}
+
+	public CommerceInventoryWarehouseItemQuantityException(
+		Throwable cause) {
+
+		super(cause);
+	}
+
 }

@@ -55,18 +55,12 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 				   .addCommerceInventoryWarehouseItem(commerceInventoryWarehouseItem);
 	}
 
-	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, String sku, int quantity, long userId)
+	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceWarehouseItem(commerceWarehouseId, sku,
-			quantity, userId);
-	}
-
-	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem addStockQuantity(
-		long commerceWarehouseItemId, int quantity)
-		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException {
-		return getService().addStockQuantity(commerceWarehouseItemId, quantity);
+				   .addCommerceInventoryWarehouseItem(userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	/**
@@ -107,8 +101,10 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 				   .deleteCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId);
 	}
 
-	public static void deleteCommerceWarehouseItems(long commerceWarehouseId) {
-		getService().deleteCommerceWarehouseItems(commerceWarehouseId);
+	public static void deleteCommerceInventoryWarehouseItemsByInventoryWarehouseId(
+		long commerceInventoryWarehouseId) {
+		getService()
+			.deleteCommerceInventoryWarehouseItemsByInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
 	/**
@@ -204,9 +200,12 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 				   .fetchCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId);
 	}
 
-	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem fetchCommerceWarehouseItem(
-		long commerceWarehouseId, String sku) {
-		return getService().fetchCommerceWarehouseItem(commerceWarehouseId, sku);
+	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem fetchCommerceInventoryWarehouseItemByC_S(
+		long commerceInventoryWarehouseId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchCommerceInventoryWarehouseItemByC_S(commerceInventoryWarehouseId,
+			sku);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -252,25 +251,11 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 		return getService().getCommerceInventoryWarehouseItemsCount();
 	}
 
-	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem getCommerceWarehouseItem(
-		long commerceWarehouseId, String sku)
-		throws com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException {
-		return getService().getCommerceWarehouseItem(commerceWarehouseId, sku);
-	}
-
-	public static java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem> getCommerceWarehouseItems(
-		String sku) {
-		return getService().getCommerceWarehouseItems(sku);
-	}
-
-	public static java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem> getCommerceWarehouseItemsByCommerceWarehouseId(
-		long commerceWarehouseId) {
+	public static java.util.List<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem> getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId, int start, int end) {
 		return getService()
-				   .getCommerceWarehouseItemsByCommerceWarehouseId(commerceWarehouseId);
-	}
-
-	public static int getCommerceWarehouseItemsCount(String sku) {
-		return getService().getCommerceWarehouseItemsCount(sku);
+				   .getCommerceInventoryWarehousesByCommerceInventoryWarehouseId(commerceInventoryWarehouseId,
+			start, end);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -292,17 +277,13 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static int getStockQuantityByGroupIdAndSku(long companyId,
-		long groupId, String sku) {
-		return getService()
-				   .getStockQuantityByGroupIdAndSku(companyId, groupId, sku);
+	public static int getStockQuantityByG_S(long companyId, long groupId,
+		String sku) {
+		return getService().getStockQuantityByG_S(companyId, groupId, sku);
 	}
 
-	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem removeStockQuantity(
-		long commerceWarehouseItemId, int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .removeStockQuantity(commerceWarehouseItemId, quantity);
+	public static int getStockQuantityBySku(long companyId, String sku) {
+		return getService().getStockQuantityBySku(companyId, sku);
 	}
 
 	/**
@@ -317,12 +298,20 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 				   .updateCommerceInventoryWarehouseItem(commerceInventoryWarehouseItem);
 	}
 
-	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem updateCommerceWarehouseItem(
-		long commerceWarehouseItemId, int quantity)
+	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
+		long commerceInventoryWarehouseItemId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCommerceWarehouseItem(commerceWarehouseItemId,
+				   .updateCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId,
 			quantity);
+	}
+
+	public static com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+		long userId, long commerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .upsertCommerceInventoryWarehouseItem(userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	public static CommerceInventoryWarehouseItemLocalService getService() {

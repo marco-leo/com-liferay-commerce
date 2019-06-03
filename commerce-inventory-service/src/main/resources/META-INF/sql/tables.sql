@@ -19,7 +19,7 @@ create table CIBookedQuantity (
 	modifiedDate DATE null,
 	sku VARCHAR(75) null,
 	quantity INTEGER,
-	expireDate DATE null,
+	expirationDate DATE null,
 	bookedNote VARCHAR(75) null
 );
 
@@ -30,7 +30,7 @@ create table CIReplenishmentItem (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceWarehouseId LONG,
+	commerceInventoryWarehouseId LONG,
 	sku VARCHAR(75) null,
 	availabilityDate DATE null,
 	quantity INTEGER
@@ -67,7 +67,7 @@ create table CIWarehouseGroupRel (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceWarehouseId LONG,
+	commerceInventoryWarehouseId LONG,
 	primary_ BOOLEAN
 );
 
@@ -78,7 +78,7 @@ create table CIWarehouseItem (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceWarehouseId LONG,
+	commerceInventoryWarehouseId LONG,
 	sku VARCHAR(75) null,
 	quantity INTEGER,
 	reservedQuantity INTEGER

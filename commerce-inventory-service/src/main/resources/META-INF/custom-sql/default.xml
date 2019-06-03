@@ -1,26 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditFinder.findOldInventoryAudit">
-		<![CDATA[
-			SELECT
-				CIAudit.*
-			FROM
-				CIAudit
-			WHERE
-				CIAudit.createDate < ?
-		]]>
-	</sql>
-	<sql id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityFinder.findOldTempBookedQuantities">
-		<![CDATA[
-			SELECT
-				CIBookedQuantity.*
-			FROM
-				CIBookedQuantity
-			WHERE
-				CIBookedQuantity.expireDate < NOW()
-		]]>
-	</sql>
 	<sql id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemFinder.findByGroupAndSku">
 		<![CDATA[
 			SELECT
@@ -211,6 +191,17 @@
 			WHERE
 				(CIWarehouseItem.companyId = ?) AND
 				(CIWarehouseGroupRel.groupId = ?) AND
+				(CIWarehouseItem.sku = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemFinder.findStockQuantityBySku">
+		<![CDATA[
+			SELECT
+				SUM(CIWarehouseItem.quantity) AS SUM_VALUE
+			FROM
+				CIWarehouseItem
+			WHERE
+				(CIWarehouseItem.companyId = ?) AND
 				(CIWarehouseItem.sku = ?)
 		]]>
 	</sql>
