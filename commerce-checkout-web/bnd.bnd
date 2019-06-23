@@ -4,4 +4,8 @@ Bundle-Version: 1.2.3
 Export-Package:\
 	com.liferay.commerce.checkout.web.constants,\
 	com.liferay.commerce.checkout.web.util
+Import-Package:\
+	com.liferay.taglib.util;version="[7.4.0,8.1.0)",\
+	\
+	*
 -dsannotations-options: inherit
