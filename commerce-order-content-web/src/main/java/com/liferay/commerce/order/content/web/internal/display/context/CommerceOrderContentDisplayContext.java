@@ -70,6 +70,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -139,19 +140,6 @@ public class CommerceOrderContentDisplayContext {
 			_cpRequestHelper.getScopeGroupId());
 	}
 
-	public List<CommerceAddress> getAvailableCommerceOrderAddresses()
-		throws PortalException {
-
-		if (_commerceAccount == null) {
-			return Collections.emptyList();
-		}
-
-		return _commerceAddressService.getCommerceAddresses(
-			_commerceAccount.getCommerceAccountGroupId(),
-			CommerceAccount.class.getName(),
-			_commerceAccount.getCommerceAccountId());
-	}
-
 	public CommerceAccount getCommerceAccount() {
 		return _commerceAccount;
 	}
@@ -166,12 +154,44 @@ public class CommerceOrderContentDisplayContext {
 		return commerceAccountId;
 	}
 
-	public List<CommerceAddress> getCommerceAddresses(long commerceAccountId)
+	public List<CommerceAddress> getShippingCommerceAddresses(long commerceAccountId)
 		throws PortalException {
 
-		return _commerceAddressService.getCommerceAddresses(
-			_cpRequestHelper.getScopeGroupId(), CommerceAccount.class.getName(),
-			commerceAccountId);
+		List<CommerceAddress> shippingCommerceAddresses = new ArrayList<>();
+
+		List<CommerceAddress> commerceAddresses =
+		_commerceAddressService.getCommerceAddresses(
+			CommerceAccount.class.getName(),
+			_commerceAccount.getCommerceAccountId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for(CommerceAddress commerceAddress : commerceAddresses){
+			if(commerceAddress.isDefaultShipping()){
+				shippingCommerceAddresses.add(commerceAddress);
+			}
+		}
+
+		return shippingCommerceAddresses;
+	}
+
+	public List<CommerceAddress> getBillingCommerceAddresses(long commerceAccountId)
+		throws PortalException {
+
+		List<CommerceAddress> billingCommerceAddresses = new ArrayList<>();
+
+		List<CommerceAddress> commerceAddresses =
+			_commerceAddressService.getCommerceAddresses(
+				CommerceAccount.class.getName(),
+				_commerceAccount.getCommerceAccountId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for(CommerceAddress commerceAddress : commerceAddresses){
+			if(commerceAddress.isDefaultBilling()){
+				billingCommerceAddresses.add(commerceAddress);
+			}
+		}
+
+		return billingCommerceAddresses;
 	}
 
 	public CommerceOrder getCommerceOrder() throws PortalException {

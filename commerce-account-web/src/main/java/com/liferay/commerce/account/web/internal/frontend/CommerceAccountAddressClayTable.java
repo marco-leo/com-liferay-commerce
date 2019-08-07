@@ -129,14 +129,10 @@ public class CommerceAccountAddressClayTable
 	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		AccountFilterImpl accountFilter = (AccountFilterImpl)filter;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		AccountFilterImpl accountFilter = (AccountFilterImpl) filter;
 
 		return _commerceAddressService.getCommerceAddressesCount(
-			themeDisplay.getScopeGroupId(), CommerceAccount.class.getName(),
+			CommerceAccount.class.getName(),
 			accountFilter.getAccountId());
 	}
 
@@ -165,15 +161,12 @@ public class CommerceAccountAddressClayTable
 
 		AccountFilterImpl accountFilter = (AccountFilterImpl)filter;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		List<Address> addresses = new ArrayList<>();
 
 		List<CommerceAddress> commerceAddresses =
+
 			_commerceAddressService.getCommerceAddresses(
-				themeDisplay.getScopeGroupId(), CommerceAccount.class.getName(),
+				CommerceAccount.class.getName(),
 				accountFilter.getAccountId(), pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
 

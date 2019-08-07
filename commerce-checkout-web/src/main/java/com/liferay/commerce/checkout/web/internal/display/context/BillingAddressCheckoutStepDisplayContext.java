@@ -14,11 +14,16 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.commerce.util.comparator.CommerceAddressNameComparator;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +67,28 @@ public class BillingAddressCheckoutStepDisplayContext
 		}
 
 		return defaultCommerceAddressId;
+	}
+
+	@Override
+	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		List<CommerceAddress> billingCommerceAddresses = new ArrayList<>();
+
+		List<CommerceAddress> commerceAddresses =
+			commerceAddressService.getCommerceAddresses(
+				CommerceAccount.class.getName(),
+				commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for(CommerceAddress commerceAddress : commerceAddresses){
+			if(commerceAddress.isDefaultBilling()){
+				billingCommerceAddresses.add(commerceAddress);
+			}
+		}
+
+		return billingCommerceAddresses;
 	}
 
 	@Override
