@@ -1,0 +1,34 @@
+$color-theme: #30CFA1;
+$color-fg: #30CFA1;
+$color-fg-alt: #7F848D;
+$color-bg: #FFF;
+$color-bg-medium: #FCFCFC;
+$color-bg-alt: #F7F7F8;
+$color-bg-dark: #34373E;
+$color-theme-light: rgba(48, 207, 161, 0.64);
+$color-theme-dark: #2CBE94;
+$color-mood-good: #698FD9;
+$color-mood-bad: #EC676A;
+$color-mood-bad-bg: #FEF7F7;
+
+$color-shadow: rgba(92, 94, 94, 0.14);
+
+$stroke: #101010;
+$stroke-alt: #F2F2F2;
+$stroke-variant: #353535;
+
+$speedwell-shadow: 0 10px 20px $color-shadow;
+
+$transition: ease 200ms;
+$micro-transition: ease 100ms;
+$liferay-topbar-size: 56px;
+$liferay-topbar-size-small: 49px;
+$speedwell-topbar-size: 80px;
+$speedwell-topbar-size-small: 70px;
+$frame-size: 70px;
+
+$easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
+$easeInQuart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+$easeInQuint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$easeOutQuint: cubic-bezier(0.23, 1, 0.32, 1);
+$easeInOutQuint: cubic-bezier(0.86, 0, 0.07, 1);
