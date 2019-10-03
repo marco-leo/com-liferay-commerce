@@ -14,16 +14,6 @@
 
 package com.liferay.commerce.internal.order.term.contributor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
@@ -43,6 +33,16 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -87,7 +87,7 @@ public class CommerceOrderDefinitionTermContributor
 		if (term.equals(_ORDER_ID)) {
 			return String.valueOf(commerceOrder.getCommerceOrderId());
 		}
-		
+
 		if (term.equals(_ORDER_ITEMS)) {
 			return getOrderItemsTerm(commerceOrder, locale);
 		}
@@ -125,167 +125,172 @@ public class CommerceOrderDefinitionTermContributor
 	public List<String> getTerms() {
 		return new ArrayList<>(_commerceOrderDefinitionTermsMap.keySet());
 	}
-	
+
 	private String formatAddressTerm(
-			CommerceAddress commerceAddress, Locale locale) {
+		CommerceAddress commerceAddress, Locale locale) {
 
-			if (commerceAddress == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("The commerce address is null, moving on.");
-				}
-
-				return "";
-			}
-
-			// Build the address string
-
-			StringBuilder address = new StringBuilder(commerceAddress.getName());
-
-			address.append("<br/>");
-
-			address.append(commerceAddress.getStreet1());
-			address.append("<br/>");
-
-			if (!Validator.isBlank(commerceAddress.getStreet2())) {
-				address.append(commerceAddress.getStreet2());
-				address.append("<br/>");
-			}
-
-			if (!Validator.isBlank(commerceAddress.getStreet3())) {
-				address.append(commerceAddress.getStreet3());
-				address.append("<br/>");
-			}
-
-			if (!Validator.isBlank(commerceAddress.getStreet3())) {
-				address.append(commerceAddress.getStreet3());
-				address.append("<br/>");
-			}
-
-			address.append(commerceAddress.getCity());
-			address.append(", ");
-			address.append(commerceAddress.getZip());
-			address.append("<br/>");
-
-			try {
-				CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
-
-				if (commerceRegion != null) {
-					address.append(commerceRegion.getName());
-					address.append(", ");
-				}
-
-				CommerceCountry commerceCountry =
-					commerceAddress.getCommerceCountry();
-
-				if (commerceCountry != null) {
-					address.append(commerceCountry.getName(locale));
-				}
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"It wasn't possible to get either the country or region for this commerce address",
-						pe);
-				}
-			}
-
+		if (commerceAddress == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Adding address term to the notification: " +
-						address.toString());
+				_log.debug("The commerce address is null, moving on.");
 			}
 
-			return address.toString();
+			return "";
 		}
 
-		private String getOrderItemsTerm(
-			CommerceOrder commerceOrder, Locale locale) {
+		// Build the address string
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Processing order items term");
+		StringBuilder address = new StringBuilder(commerceAddress.getName());
+
+		address.append("<br/>");
+
+		address.append(commerceAddress.getStreet1());
+		address.append("<br/>");
+
+		if (!Validator.isBlank(commerceAddress.getStreet2())) {
+			address.append(commerceAddress.getStreet2());
+			address.append("<br/>");
+		}
+
+		if (!Validator.isBlank(commerceAddress.getStreet3())) {
+			address.append(commerceAddress.getStreet3());
+			address.append("<br/>");
+		}
+
+		if (!Validator.isBlank(commerceAddress.getStreet3())) {
+			address.append(commerceAddress.getStreet3());
+			address.append("<br/>");
+		}
+
+		address.append(commerceAddress.getCity());
+		address.append(", ");
+		address.append(commerceAddress.getZip());
+		address.append("<br/>");
+
+		try {
+			CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+
+			if (commerceRegion != null) {
+				address.append(commerceRegion.getName());
+				address.append(", ");
 			}
 
-			// Check if we have commerceOrder
+			CommerceCountry commerceCountry =
+				commerceAddress.getCommerceCountry();
 
-			if (commerceOrder == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Trying to get the item list for an order without an order object!");
-				}
-
-				return "";
+			if (commerceCountry != null) {
+				address.append(commerceCountry.getName(locale));
 			}
-
-			// Get the order items list
-
-			List<CommerceOrderItem> orderItemsList =
-				commerceOrder.getCommerceOrderItems();
-
-			if (ListUtil.isEmpty(orderItemsList)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"This order has no linked order items to be included in the mail notification");
-				}
-
-				return "";
-			}
-
-			// Build the items html table (Header)
-
-			StringBuilder orderItemsTable = new StringBuilder(
-				"<table style=\"border: 1px solid black;\">" +
-					"<tr><th style=\"border: 1px solid black;\">Product Name</th>" +
-						"<th style=\"border: 1px solid black;\">SKU</th>" +
-							"<th style=\"border: 1px solid black;\">Quantity</th></tr>");
-
-			// And add the order items
-
-			for (CommerceOrderItem commerceOrderItem : orderItemsList) {
-				orderItemsTable.append(
-					"<tr><td style=\"border: 1px solid black;\">");
-				orderItemsTable.append(commerceOrderItem.getName(locale));
-				orderItemsTable.append(
-					"</td><td style=\"border: 1px solid black;\">");
-				orderItemsTable.append(commerceOrderItem.getSku());
-				orderItemsTable.append(
-					"</td><td style=\"border: 1px solid black;\">");
-				orderItemsTable.append(commerceOrderItem.getQuantity());
-				orderItemsTable.append("</td></tr>");
-			}
-
+		}
+		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Order items table built successfully: " +
-						orderItemsTable.toString());
+					"It wasn't possible to get either the country or region for this commerce address",
+					pe);
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Adding address term to the notification: " +
+					address.toString());
+		}
+
+		return address.toString();
+	}
+
+	private String getOrderItemsTerm(
+		CommerceOrder commerceOrder, Locale locale) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Processing order items term");
+		}
+
+		// Check if we have commerceOrder
+
+		if (commerceOrder == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Trying to get the item list for an order without an order object!");
 			}
 
-			return orderItemsTable.toString();
+			return "";
 		}
+
+		// Get the order items list
+
+		List<CommerceOrderItem> orderItemsList =
+			commerceOrder.getCommerceOrderItems();
+
+		if (ListUtil.isEmpty(orderItemsList)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"This order has no linked order items to be included in the mail notification");
+			}
+
+			return "";
+		}
+
+		// Build the items html table (Header)
+
+		StringBuilder orderItemsTable = new StringBuilder(
+			"<table style=\"border: 1px solid black;\">" +
+				"<tr><th style=\"border: 1px solid black;\">Product Name</th>" +
+					"<th style=\"border: 1px solid black;\">SKU</th>" +
+						"<th style=\"border: 1px solid black;\">Quantity</th></tr>");
+
+		// And add the order items
+
+		for (CommerceOrderItem commerceOrderItem : orderItemsList) {
+			orderItemsTable.append(
+				"<tr><td style=\"border: 1px solid black;\">");
+			orderItemsTable.append(commerceOrderItem.getName(locale));
+			orderItemsTable.append(
+				"</td><td style=\"border: 1px solid black;\">");
+			orderItemsTable.append(commerceOrderItem.getSku());
+			orderItemsTable.append(
+				"</td><td style=\"border: 1px solid black;\">");
+			orderItemsTable.append(commerceOrderItem.getQuantity());
+			orderItemsTable.append("</td></tr>");
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Order items table built successfully: " +
+					orderItemsTable.toString());
+		}
+
+		return orderItemsTable.toString();
+	}
 
 	private static final String _ORDER_BILLING_ADDRESS =
-			"[%ORDER_BILLING_ADDRESS%]";
-	
+		"[%ORDER_BILLING_ADDRESS%]";
+
 	private static final String _ORDER_CREATOR = "[%ORDER_CREATOR%]";
 
 	private static final String _ORDER_ID = "[%ORDER_ID%]";
-	
+
 	private static final String _ORDER_ITEMS = "[%ORDER_ITEMS%]";
 
 	private static final String _ORDER_SHIPPING_ADDRESS =
 		"[%ORDER_SHIPPING_ADDRESS%]";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderDefinitionTermContributor.class);
+
 	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
 		new HashMap<String, String>() {
 			{
-				put(_ORDER_BILLING_ADDRESS, "order-billing-address-definition-term");
+				put(
+					_ORDER_BILLING_ADDRESS,
+					"order-billing-address-definition-term");
 				put(_ORDER_CREATOR, "order-creator-definition-term");
 				put(_ORDER_ID, "order-id-definition-term");
 				put(_ORDER_ITEMS, "order-items-definition-term");
-				put(_ORDER_SHIPPING_ADDRESS, "order-shipping-address-definition-term");
+				put(
+					_ORDER_SHIPPING_ADDRESS,
+					"order-shipping-address-definition-term");
 			}
 		};
-		
-	private static final Log _log = LogFactoryUtil.getLog(CommerceOrderDefinitionTermContributor.class);
 
 	@Reference
 	private UserLocalService _userLocalService;
